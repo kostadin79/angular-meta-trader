@@ -1,0 +1,22 @@
+<!-- <mat-selection-list #rates [multiple]="false">
+  <mat-list-option *ngFor="let rate of ratesListData" [value]="rate">
+
+  </mat-list-option>
+</mat-selection-list> -->
+    <mat-grid-list cols="4" rowHeight="4:3" *ngFor="let rate of ratesListData" (click)="changeChartsRate(rate.symbol)">
+      <mat-grid-tile>{{ rate.symbol }}</mat-grid-tile>
+      <mat-grid-tile>{{ rate.bid }}</mat-grid-tile>
+      <mat-grid-tile>{{ rate.ask }}</mat-grid-tile>
+      <mat-grid-tile>
+        <div *ngIf="!rate.direction">
+          <mat-icon>swap_vert</mat-icon>
+        </div>
+        <div *ngIf="rate.direction == 'UP'">
+          <mat-icon style="color:green">trending_up</mat-icon>
+        </div>
+        <div *ngIf="rate.direction == 'DOWN'">
+          <mat-icon style="color:red">trending_down</mat-icon>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+<!-- <p>Option selected: {{ rates.selectedOptions.selected[0]?.value.symbol }}</p> -->

@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-12">
+    <terminal-rates-charts></terminal-rates-charts>
+    <div class="row">
+      <div class="col-12 mt-5">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">order</th>
+                <th scope="col">open_time</th>
+                <th scope="col">type</th>
+                <th scope="col">volume</th>
+                <th scope="col">symbol</th>
+                <th scope="col">price</th>
+                <th scope="col">sl</th>
+                <th scope="col">tp</th>
+                <th scope="col">price</th>
+                <th scope="col">commission</th>
+                <th scope="col">swap</th>
+                <th scope="col">profit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let openPosition of openPositions">
+                <th scope="row">{{openPosition.order}}</th>
+                <td>{{openPosition.open_time}}</td>
+                <td>{{openPosition.type}}</td>
+                <td>{{openPosition.volume}}</td>
+                <td>{{openPosition.symbol}}</td>
+                <td>{{openPosition.price}}</td>
+                <td>{{openPosition.sl}}</td>
+                <td>{{openPosition.tp}}</td>
+                <td>{{openPosition.price}}</td>
+                <td>{{openPosition.commission}}</td>
+                <td>{{openPosition.swap}}</td>
+                <td>{{openPosition.profit}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="featurette-divider" />
