@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from '../../services/data.service';
-import { Rate } from '@terminal/api-interfaces';
+import { Rate } from '../../models/rates';
 
 export interface RateWithDiff extends Rate {
   direction?: string;
@@ -15,7 +15,7 @@ export interface RateWithDiff extends Rate {
 })
 export class LiveQuotesComponent implements OnInit {
   ratesListData: RateWithDiff[] = [];
-  subscription: Subscription;
+  subscription!: Subscription;
 
   constructor(private dataService: DataService) {}
 

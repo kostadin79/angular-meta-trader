@@ -5,6 +5,7 @@
 export const environment = {
   production: false
 };
+export const WS_ENDPOINT = 'ws://localhost:4200/socket-ws'
 
 /*
  * For easier debugging in development mode, you can import the following file
