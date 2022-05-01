@@ -1,22 +1,19 @@
-<!-- <mat-selection-list #rates [multiple]="false">
-  <mat-list-option *ngFor="let rate of ratesListData" [value]="rate">
 
-  </mat-list-option>
-</mat-selection-list> -->
-    <mat-grid-list cols="4" rowHeight="4:3" *ngFor="let rate of ratesListData" (click)="changeChartsRate(rate.symbol)">
-      <mat-grid-tile>{{ rate.symbol }}</mat-grid-tile>
-      <mat-grid-tile>{{ rate.bid }}</mat-grid-tile>
-      <mat-grid-tile>{{ rate.ask }}</mat-grid-tile>
-      <mat-grid-tile>
+    <div class="row g-0 py-2" *ngFor="let rate of ratesListData" (click)="changeChartsRate(rate.symbol)">
+
+      <div class="col-3">{{ rate.symbol }}</div>
+      <div class="col-4">{{ rate.bid }}</div>
+      <div class="col-4">{{ rate.ask }}</div>
+      <div class="col-1">
         <div *ngIf="!rate.direction">
-          <mat-icon>swap_vert</mat-icon>
+          <fa-icon [icon]="faPause"></fa-icon>
         </div>
         <div *ngIf="rate.direction == 'UP'">
-          <mat-icon style="color:green">trending_up</mat-icon>
+          <fa-icon [icon]="faSquareCaretUp"></fa-icon>
         </div>
         <div *ngIf="rate.direction == 'DOWN'">
-          <mat-icon style="color:red">trending_down</mat-icon>
+          <fa-icon [icon]="faSquareCaretDown"></fa-icon>
         </div>
-      </mat-grid-tile>
-    </mat-grid-list>
-<!-- <p>Option selected: {{ rates.selectedOptions.selected[0]?.value.symbol }}</p> -->
+      </div>
+    </div>
+

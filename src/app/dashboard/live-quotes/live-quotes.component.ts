@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from '../../services/data.service';
 import { Rate } from '../../models/rates';
+import { faCoffee, faPause, faSquareCaretUp, faSquareCaretDown} from '@fortawesome/free-solid-svg-icons';
 
 export interface RateWithDiff extends Rate {
   direction?: string;
@@ -16,6 +17,9 @@ export interface RateWithDiff extends Rate {
 export class LiveQuotesComponent implements OnInit {
   ratesListData: RateWithDiff[] = [];
   subscription!: Subscription;
+  faPause = faPause;
+  faSquareCaretUp = faSquareCaretUp;
+  faSquareCaretDown = faSquareCaretDown;
 
   constructor(private dataService: DataService) {}
 

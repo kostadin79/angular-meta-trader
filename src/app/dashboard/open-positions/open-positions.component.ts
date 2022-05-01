@@ -22,21 +22,20 @@ export interface OpenPosition {
   styleUrls: ['./open-positions.component.scss'],
 })
 export class OpenPositionsComponent implements OnInit {
-  openPositions: OpenPosition[] | undefined;
+  openPositions: OpenPosition[] = [];
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
-
-    this.dataService.getInitialOpenPositions().subscribe((data: OpenPosition[]) => {
-      this.openPositions = data;
-    console.log('OpenPositionsComponent');
-    });
+    this.dataService
+      .getInitialOpenPositions()
+      .subscribe((data: OpenPosition[]) => {
+        this.openPositions = data;
+        console.log('OpenPositionsComponent');
+      });
 
     this.dataService.openPositionsSource$.subscribe((data: OpenPosition[]) => {
       // console.log('OpenPositionsComponent---->',data);
       this.openPositions = data;
     });
-
   }
-
 }
