@@ -3,7 +3,7 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { environment, WS_ENDPOINT } from '../../environments/environment';
 import { catchError, tap, switchAll, map, filter, take } from 'rxjs/operators';
 import { EMPTY, Subject, Observable, throwError } from 'rxjs';
-import { Rate } from '@terminal/api-interfaces';
+import { Rate } from '../models/rates';
 
 @Injectable({
   providedIn: 'root',
@@ -29,15 +29,14 @@ export class DataService {
     'NZDUSD',
   ];
   private socket$: WebSocketSubject<any> = webSocket(
-    'ws://localhost:4200/socket-ws'
+    'ws://127.0.0.1:8888'
   );
 
   private messageFromSocket$ = new Subject<any>();
 
-  public ratesSource$: Observable<any> = this.messageFromSocket$ .asObservable()
-    .pipe(filter((data) => data.event == 'PRICES'),map(val =>val.data));
+  public ratesSource$: Observable<any> = this.messageFromSocket$.asObservable().pipe(filter((data) => data.event == 'PRICES'),map(val =>val.data));
 
-  public accountSource$: Observable<any>;
+  // public accountSource$: Observable<any>;
 
   public openPositionsSource$: Observable<any> = this.messageFromSocket$.asObservable().pipe(
     filter(data => data.event == 'ORDERS'),map(val=> val.data));

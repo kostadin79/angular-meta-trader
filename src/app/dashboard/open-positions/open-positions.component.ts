@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../../services/data.service';
+import { DataService } from '../../services/data.service';
 
 export interface OpenPosition {
   comment: string;
@@ -22,12 +22,13 @@ export interface OpenPosition {
   styleUrls: ['./open-positions.component.scss'],
 })
 export class OpenPositionsComponent implements OnInit {
-  openPositions: OpenPosition[];
+  openPositions: OpenPosition[] | undefined;
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
 
-    this.dataService.getInitialOpenPositions().subscribe(data => {this.openPositions = data;
+    this.dataService.getInitialOpenPositions().subscribe((data: OpenPosition[]) => {
+      this.openPositions = data;
     console.log('OpenPositionsComponent');
     });
 

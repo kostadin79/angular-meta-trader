@@ -20,7 +20,7 @@ export class RatesChartsComponent implements OnInit {
   ngOnInit() {
     this.dataService.getChart('EURJPY').subscribe((data) => {
       // console.log('OpenPositionsComponent->', data);
-      const formatedChartData = data.map((val) => [
+      const formatedChartData = data.map((val:any) => [
         val.time.substr(0, 10).replaceAll('.', '-'),
         val.open,
         val.close,
@@ -50,8 +50,8 @@ export class RatesChartsComponent implements OnInit {
           textStyle: {
             color: '#000',
           },
-          position: function (pos, params, el, elRect, size) {
-            const obj = { top: 10 };
+          position: function (pos: number[], params: any, el: any, elRect: any, size: { viewSize: number[]; }) {
+            const obj: any = { top: 10 };
             obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
             return obj;
           },
@@ -183,7 +183,7 @@ export class RatesChartsComponent implements OnInit {
               borderColor0: null,
             },
             tooltip: {
-              formatter: function (param) {
+              formatter: function (param: any) {
                 param = param[0];
                 return [
                   'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
@@ -244,7 +244,7 @@ export class RatesChartsComponent implements OnInit {
     });
   }
 
-  onChartInit(ec) {
+  onChartInit(ec: any) {
     this.echartsInstance = ec;
     console.log(this.echartsInstance);
   }
@@ -255,7 +255,7 @@ export class RatesChartsComponent implements OnInit {
     }
   }
 
-  splitData(rawData) {
+  splitData(rawData: string | any[]) {
     const categoryData = [];
     const values = [];
     const volumes = [];
@@ -271,7 +271,7 @@ export class RatesChartsComponent implements OnInit {
     };
   }
 
-  calculateMA(dayCount, data) {
+  calculateMA(dayCount: number, data: { categoryData?: any[]; values: any; volumes?: any[][]; }) {
     const result = [];
     for (let i = 0, len = data.values.length; i < len; i++) {
       if (i < dayCount) {

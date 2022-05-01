@@ -44,7 +44,8 @@ export class LiveQuotesComponent implements OnInit {
     );
   }
 
-  changeChartsRate(event){
+
+  changeChartsRate(event: any){
     console.log('changeChartsRate()',event)
   }
 }

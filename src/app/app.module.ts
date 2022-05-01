@@ -12,12 +12,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LiveQuotesComponent } from './dashboard/live-quotes/live-quotes.component';
 import { SinglePositionComponent } from './dashboard/open-positions/single-position/single-position.component';
 import { RatesChartsComponent } from './dashboard/rates-charts/rates-charts.component';
+import {NgxEchartsModule} from "ngx-echarts";
 
 @NgModule({
   declarations: [
     AppComponent,
     SinglePositionComponent,
     DashboardComponent,
+    RatesChartsComponent,
+    LiveQuotesComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,15 @@ import { RatesChartsComponent } from './dashboard/rates-charts/rates-charts.comp
     MatIconModule,
     MatGridListModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+    NgxEchartsModule.forRoot({
+      /**
+       * This will import all modules from echarts.
+       * If you only need custom modules,
+       * please refer to [Custom Build] section.
+       */
+      echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
+    }),
   ],
   providers: [],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
