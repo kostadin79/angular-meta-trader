@@ -1,16 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'terminal-single-position',
+  selector: 'app-single-position',
   templateUrl: './single-position.component.html',
-  styleUrls: ['./single-position.component.scss']
+  styleUrls: ['./single-position.component.scss'],
 })
 export class SinglePositionComponent implements OnInit {
-@Input() openPosition: any;
-  constructor() { }
+  @Input() openPosition: any;
+  constructor() {}
 
-  ngOnInit(): void {
-
-  }
-
+  ngOnInit(): void {}
 }

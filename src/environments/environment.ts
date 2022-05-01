@@ -3,9 +3,29 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
 };
-export const WS_ENDPOINT = 'ws://localhost:4200/socket-ws'
+export const WS_ENDPOINT = 'ws://localhost:4200/socket-ws';
+
+export const ratesList = [
+  'EURUSD',
+  'USDJPY',
+  'EURGBP',
+  'GBPUSD',
+  'EURJPY',
+  'GBPJPY',
+  'USDCAD',
+  'EURCHF',
+  'GBPCHF',
+  'USDCHF',
+  'CADCHF',
+  'CHFJPY',
+  'CADJPY',
+  'GBPCAD',
+  'EURCAD',
+  'AUDUSD',
+  'NZDUSD',
+];
 
 /*
  * For easier debugging in development mode, you can import the following file

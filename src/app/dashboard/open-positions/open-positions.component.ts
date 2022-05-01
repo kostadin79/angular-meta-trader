@@ -1,41 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
-
-export interface OpenPosition {
-  comment: string;
-  commission: number;
-  open_time: string;
-  order: number;
-  price: number;
-  profit: number;
-  sl: number;
-  swap: number;
-  symbol: string;
-  tp: number;
-  type: number;
-  volume: number;
-}
+import { OpenPosition } from '../../models/open-position';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'terminal-open-positions',
+  selector: 'app-open-positions',
   templateUrl: './open-positions.component.html',
   styleUrls: ['./open-positions.component.scss'],
 })
-export class OpenPositionsComponent implements OnInit {
+export class OpenPositionsComponent implements OnInit, OnDestroy {
   openPositions: OpenPosition[] = [];
+  private destroy$ = new Subject();
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
     this.dataService
       .getInitialOpenPositions()
-      .subscribe((data: OpenPosition[]) => {
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
         this.openPositions = data;
         console.log('OpenPositionsComponent');
       });
 
-    this.dataService.openPositionsSource$.subscribe((data: OpenPosition[]) => {
-      // console.log('OpenPositionsComponent---->',data);
-      this.openPositions = data;
-    });
+    this.dataService.openPositionsSource$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: OpenPosition[]) => {
+        // console.log('OpenPositionsComponent---->',data);
+        this.openPositions = data;
+      });
+  }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

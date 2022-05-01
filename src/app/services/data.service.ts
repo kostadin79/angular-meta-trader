@@ -1,45 +1,37 @@
 import { Injectable } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { environment, WS_ENDPOINT } from '../../environments/environment';
-import { catchError, tap, switchAll, map, filter, take } from 'rxjs/operators';
-import { EMPTY, Subject, Observable, throwError } from 'rxjs';
+import { tap, map, filter, take } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
 import { Rate } from '../models/rates';
+import { OpenPosition } from '../models/open-position';
+import { ratesList } from '../../environments/environment';
+import { SocketMessage } from '../models/socket-message';
+import { Chart } from '../models/chart';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  ratesList: string[] = [
-    'EURUSD',
-    'USDJPY',
-    'EURGBP',
-    'GBPUSD',
-    'EURJPY',
-    'GBPJPY',
-    'USDCAD',
-    'EURCHF',
-    'GBPCHF',
-    'USDCHF',
-    'CADCHF',
-    'CHFJPY',
-    'CADJPY',
-    'GBPCAD',
-    'EURCAD',
-    'AUDUSD',
-    'NZDUSD',
-  ];
-  private socket$: WebSocketSubject<any> = webSocket(
-    'ws://127.0.0.1:8888'
-  );
+  ratesList: string[] = ratesList;
 
-  private messageFromSocket$ = new Subject<any>();
+  private socket$: WebSocketSubject<any> = webSocket('ws://127.0.0.1:8888');
 
-  public ratesSource$: Observable<any> = this.messageFromSocket$.asObservable().pipe(filter((data) => data.event == 'PRICES'),map(val =>val.data));
+  private messageFromSocket$: Subject<any> = new Subject();
+
+  public ratesSource$: Observable<Rate[]> = this.messageFromSocket$
+    .asObservable()
+    .pipe(
+      filter((data: SocketMessage<Rate>) => data.event === 'PRICES'),
+      map((val: SocketMessage<Rate>): Rate[] => val.data)
+    );
 
   // public accountSource$: Observable<any>;
 
-  public openPositionsSource$: Observable<any> = this.messageFromSocket$.asObservable().pipe(
-    filter(data => data.event == 'ORDERS'),map(val=> val.data));
+  public openPositionsSource$: Observable<OpenPosition[]> =
+    this.messageFromSocket$.asObservable().pipe(
+      filter((data: SocketMessage<OpenPosition>) => data.event == 'ORDERS'),
+      map((val: SocketMessage<OpenPosition>) => val.data)
+    );
 
   constructor() {
     this.socket$.subscribe(
@@ -49,35 +41,36 @@ export class DataService {
       },
       (error) => console.log(error)
     );
-
   }
 
-  sentMessageToSocket(event: string, data?: any) {
-    this.socket$.next(data ? { event, data} : {event});
+  sentMessageToSocket(event: string, data?: unknown) {
+    this.socket$.next(data ? { event, data } : { event });
   }
 
   startRatesStream() {
     this.sentMessageToSocket('SUBSCRIBE_RATES', this.ratesList);
   }
-  stopRatesStream(){
+  stopRatesStream() {
     this.sentMessageToSocket('UNSUBSCRIBE_RATES', this.ratesList);
   }
 
   getInitialRates(): Observable<Rate[]> {
     this.sentMessageToSocket('MULTIPLE_RATES', this.ratesList);
     return this.messageFromSocket$.asObservable().pipe(
-      filter((data) => data.event == 'MULTIPLE_RATES'),
-      map((val) => val.data),
+      filter((data: SocketMessage<Rate>) => data.event == 'MULTIPLE_RATES'),
+      map((val: SocketMessage<Rate>) => val.data),
       tap(() => {
         this.startRatesStream();
       }),
       take(1)
     );
   }
-  getInitialOpenPositions():any{
+  getInitialOpenPositions(): Observable<OpenPosition[]> {
     this.sentMessageToSocket('OPEN_POSITIONS');
     return this.messageFromSocket$.asObservable().pipe(
-      filter((data) => data.event == 'OPEN_POSITIONS'),
+      filter(
+        (data: SocketMessage<OpenPosition>) => data.event === 'OPEN_POSITIONS'
+      ),
       map((val) => val.data),
       tap(() => {
         this.startOpenPositionsStream();
@@ -86,20 +79,19 @@ export class DataService {
     );
   }
 
-  startOpenPositionsStream():void{
+  startOpenPositionsStream(): void {
     this.sentMessageToSocket('SUBSCRIBE_OPEN_POSITIONS');
   }
-  stopOpenPositionStream(){
+  stopOpenPositionStream() {
     this.sentMessageToSocket('UNSUBSCRIBE_OPEN_POSITIONS');
   }
 
-  getChart(symbol:string):Observable<any>{
-    this.sentMessageToSocket('CHART',symbol);
+  getChart(symbol: string): Observable<Chart[]> {
+    this.sentMessageToSocket('CHART', symbol);
     return this.messageFromSocket$.asObservable().pipe(
-      filter((data) => data.event == 'CHART'),
+      filter((data: SocketMessage<Chart>) => data.event === 'CHART'),
       map((val) => val.data),
       take(1)
     );
   }
-
 }
