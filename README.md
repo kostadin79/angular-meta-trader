@@ -1,27 +1,29 @@
-# AngularMetaTrader
+# Angular Dashboard to Meta Trader 4 terminal
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
+## Before to start
+
+Before to start the project, the Meta Trader 4 terminal must be started with MetaTrader4Bridge2.mq4 activated.
+More about that [MQL 4 Folder for ZeroMQ for Meta Trader 4](https://github.com/kostadin79/zeromq-meta-trader)
+
+NestJS socket gateway must be started. More about that [Meta Trader 4 with NestJS Socket Gateway](https://github.com/kostadin79/nest-meta-trader)
+
+## Example usage
+
+The socket gateway port can be changed - environment.ts
+```ts
+export const environment = {
+  production: false,
+};
+export const WS_ENDPOINT = 'ws://localhost:4200/socket-ws';
+```
+
+![Angular Dashboard to Meta Trader 4 terminal](https://user-images.githubusercontent.com/39057409/166572619-b0ed0a00-1978-4d4e-b8d3-5efb62b66710.png)
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
