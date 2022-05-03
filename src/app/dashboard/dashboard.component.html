@@ -1,11 +1,20 @@
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+<div
+  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
   <h1 class="h2">Dashboard</h1>
   <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group me-2">
-      <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary">
+        Share
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-secondary">
+        Export
+      </button>
     </div>
-    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+    <button
+      type="button"
+      class="btn btn-sm btn-outline-secondary dropdown-toggle"
+    >
       <span data-feather="calendar"></span>
       This week
     </button>
@@ -13,24 +22,14 @@
 </div>
 <div class="row">
   <div class="col-12 col-md-2">
-  <terminal-live-quotes></terminal-live-quotes>
-</div>
+    <app-live-quotes></app-live-quotes>
+  </div>
   <div class="col-12 col-md-10">
     <h2>Charts</h2>
-    <terminal-rates-charts></terminal-rates-charts>
+    <app-rates-charts></app-rates-charts>
     <h2>Positions</h2>
     <div class="table-responsive">
-     <terminal-open-positions></terminal-open-positions>
+      <app-open-positions></app-open-positions>
     </div>
   </div>
-
 </div>
-
-
-
-
-
-
-
-
-

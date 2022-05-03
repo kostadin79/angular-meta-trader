@@ -3,7 +3,7 @@ import { DataService } from '../../services/data.service';
 import { EChartsOption } from 'echarts';
 
 @Component({
-  selector: 'terminal-rates-charts',
+  selector: 'app-rates-charts',
   templateUrl: './rates-charts.component.html',
   styleUrls: ['./rates-charts.component.scss'],
 })
@@ -20,7 +20,7 @@ export class RatesChartsComponent implements OnInit {
   ngOnInit() {
     this.dataService.getChart('EURJPY').subscribe((data) => {
       // console.log('OpenPositionsComponent->', data);
-      const formatedChartData = data.map((val:any) => [
+      const formatedChartData = data.map((val: any) => [
         val.time.substr(0, 10).replaceAll('.', '-'),
         val.open,
         val.close,
@@ -50,7 +50,13 @@ export class RatesChartsComponent implements OnInit {
           textStyle: {
             color: '#000',
           },
-          position: function (pos: number[], params: any, el: any, elRect: any, size: { viewSize: number[]; }) {
+          position: function (
+            pos: number[],
+            params: any,
+            el: any,
+            elRect: any,
+            size: { viewSize: number[] }
+          ) {
             const obj: any = { top: 10 };
             obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
             return obj;
@@ -271,7 +277,10 @@ export class RatesChartsComponent implements OnInit {
     };
   }
 
-  calculateMA(dayCount: number, data: { categoryData?: any[]; values: any; volumes?: any[][]; }) {
+  calculateMA(
+    dayCount: number,
+    data: { categoryData?: any[]; values: any; volumes?: any[][] }
+  ) {
     const result = [];
     for (let i = 0, len = data.values.length; i < len; i++) {
       if (i < dayCount) {

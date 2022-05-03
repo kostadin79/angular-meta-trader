@@ -1,19 +1,20 @@
-
-    <div class="row g-0 py-2" *ngFor="let rate of ratesListData" (click)="changeChartsRate(rate.symbol)">
-
-      <div class="col-3">{{ rate.symbol }}</div>
-      <div class="col-4">{{ rate.bid }}</div>
-      <div class="col-4">{{ rate.ask }}</div>
-      <div class="col-1">
-        <div *ngIf="!rate.direction">
-          <fa-icon [icon]="faPause"></fa-icon>
-        </div>
-        <div *ngIf="rate.direction == 'UP'">
-          <fa-icon [icon]="faSquareCaretUp"></fa-icon>
-        </div>
-        <div *ngIf="rate.direction == 'DOWN'">
-          <fa-icon [icon]="faSquareCaretDown"></fa-icon>
-        </div>
-      </div>
+<div
+  class="row g-0 py-2"
+  *ngFor="let rate of ratesListData"
+  (click)="changeChartsRate(rate.symbol)"
+>
+  <div class="col-3">{{ rate.symbol }}</div>
+  <div class="col-4">{{ rate.bid }}</div>
+  <div class="col-4">{{ rate.ask }}</div>
+  <div class="col-1">
+    <div *ngIf="!rate.direction">
+      <fa-icon [icon]="faPause"></fa-icon>
     </div>
-
+    <div *ngIf="rate.direction === 'UP'">
+      <fa-icon [icon]="faSquareCaretUp"></fa-icon>
+    </div>
+    <div *ngIf="rate.direction === 'DOWN'">
+      <fa-icon [icon]="faSquareCaretDown"></fa-icon>
+    </div>
+  </div>
+</div>
