@@ -1,13 +1,14 @@
-.asd{
-  background: green;
-}
-.bsd {
-  background-color: red;
+.row {
+  //transition: color 1s;
+  animation: opacity-animation .2s;
 }
 
-mat-grid-list{
-  cursor:pointer;
-  &:hover{
-    background-color: #eee;
+@keyframes opacity-animation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }

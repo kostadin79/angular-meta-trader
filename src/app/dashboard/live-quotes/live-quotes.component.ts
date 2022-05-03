@@ -1,11 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { DataService } from '../../services/data.service';
 import { Rate } from '../../models/rates';
 import {
   faPause,
-  faSquareCaretUp,
   faSquareCaretDown,
+  faSquareCaretUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { takeUntil } from 'rxjs/operators';
 
@@ -17,6 +23,7 @@ export interface RateWithDiff extends Rate {
   selector: 'app-live-quotes',
   templateUrl: './live-quotes.component.html',
   styleUrls: ['./live-quotes.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LiveQuotesComponent implements OnInit, OnDestroy {
   ratesListData: RateWithDiff[] = [];
@@ -26,7 +33,10 @@ export class LiveQuotesComponent implements OnInit, OnDestroy {
   faSquareCaretUp = faSquareCaretUp;
   faSquareCaretDown = faSquareCaretDown;
 
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     // this.dataService.getInitialRates.pipe()
@@ -35,6 +45,7 @@ export class LiveQuotesComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: Rate[]) => {
         this.ratesListData = data;
+        this.cd.detectChanges();
       });
 
     this.subscription = this.dataService.ratesSource$
@@ -49,6 +60,7 @@ export class LiveQuotesComponent implements OnInit, OnDestroy {
             direction:
               this.ratesListData[position].bid < newRate.bid ? 'UP' : 'DOWN',
           };
+          this.cd.detectChanges();
           // console.log('newRate->', newRate);
         });
       });
@@ -56,6 +68,10 @@ export class LiveQuotesComponent implements OnInit, OnDestroy {
 
   changeChartsRate(event: any) {
     console.log('changeChartsRate()', event);
+  }
+
+  trackByFn(index: number, rate: Rate) {
+    return rate.bid;
   }
   ngOnDestroy() {
     this.destroy$.next();
