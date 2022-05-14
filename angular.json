@@ -147,6 +147,6 @@
   },
   "defaultProject": "angular-meta-trader",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
+    "defaultCollection": "@ngrx/schematics"
   }
 }
