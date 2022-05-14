@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DataService } from '../../services/data.service';
-import { OpenPosition } from '../../models/open-position';
+import { DataService } from '../../core/services/data.service';
+import { OpenPosition } from '../../core/models/open-position';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

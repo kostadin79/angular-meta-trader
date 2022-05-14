@@ -4,7 +4,7 @@ import { tap, map, filter, take } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import { Rate } from '../models/rates';
 import { OpenPosition } from '../models/open-position';
-import { ratesList } from '../../environments/environment';
+import { ratesList } from '../../../environments/environment';
 import { SocketMessage } from '../models/socket-message';
 import { Chart } from '../models/chart';
 
