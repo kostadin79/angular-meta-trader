@@ -74,7 +74,7 @@ export class LiveQuotesComponent implements OnInit, OnDestroy {
     return rate.bid;
   }
   ngOnDestroy() {
-    this.destroy$.next();
+    this.destroy$.next(true);
     this.destroy$.complete();
   }
 }
