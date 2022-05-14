@@ -21,8 +21,8 @@
       "dom"
     ],
     "paths": {
-      "ish-core/*": ["src/app/core/*"],
-      "ish-shared/*": ["src/app/shared/*"]
+      "app-core/*": ["src/app/core/*"],
+      "app-shared/*": ["src/app/shared/*"]
     }
   },
   "angularCompilerOptions": {

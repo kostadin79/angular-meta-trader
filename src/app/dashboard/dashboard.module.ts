@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from 'ish-shared/shared.module';
+import { SharedModule } from 'app-shared/shared.module';
 import { SinglePositionComponent } from './open-positions/single-position/single-position.component';
 import { DashboardComponent } from './dashboard.component';
 import { RatesChartsComponent } from './rates-charts/rates-charts.component';
