@@ -6,8 +6,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { DataService } from '../../core/services/data.service';
-import { Rate } from '../../core/models/rates';
+import { DataService } from 'app-core/services/data.service';
+import { Rate } from 'app-core/models/rates';
 import {
   faPause,
   faSquareCaretDown,
