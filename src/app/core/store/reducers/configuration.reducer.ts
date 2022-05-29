@@ -1,5 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { ConfigurationState } from 'app-core/models/configuration';
+import { loadConnectWebsocketsSuccess } from 'app-core/store/actions/configuration.actions';
 
 export const initialState: ConfigurationState = {
   realTimeRatesList: [
@@ -24,4 +25,10 @@ export const initialState: ConfigurationState = {
   websocketConnected: false,
 };
 
-export const reducer = createReducer(initialState);
+export const reducer = createReducer(
+  initialState,
+  on(loadConnectWebsocketsSuccess, (state) => ({
+    ...state,
+    websocketConnected: true,
+  }))
+);

@@ -1,4 +1,4 @@
-import * as fromConnectWebsocket from './connect-websocket.actions';
+import * as fromConnectWebsocket from './configuration.actions';
 
 describe('loadConnectWebsockets', () => {
   it('should return an action', () => {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppFacade } from 'app-core/facades/app.facade';
+import { ConfigurationFacade } from 'app-core/facades/configuration.facade';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,10 +7,10 @@ import { AppFacade } from 'app-core/facades/app.facade';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  constructor(private appFacade: AppFacade) {}
+  constructor(private appFacade: ConfigurationFacade) {}
   ngOnInit() {
-    this.appFacade.webSocketStatus$.subscribe((value) => {
-      console.log('socket', value);
-    });
+    // this.appFacade.webSocketStatus$.subscribe((value) => {
+    //   console.log('socket', value);
+    // });
   }
 }

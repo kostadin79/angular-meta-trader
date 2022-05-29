@@ -5,8 +5,7 @@ export const loadConnectWebsockets = createAction(
 );
 
 export const loadConnectWebsocketsSuccess = createAction(
-  '[ConnectWebsocket] Load ConnectWebsockets Success',
-  props<{ data: any }>()
+  '[ConnectWebsocket] Load ConnectWebsockets Success'
 );
 
 export const loadConnectWebsocketsFailure = createAction(

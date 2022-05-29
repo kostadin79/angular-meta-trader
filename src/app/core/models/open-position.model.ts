@@ -1,7 +1,10 @@
-import {EntityState} from "@ngrx/entity";
+import { EntityState } from "@ngrx/entity";
 
-export interface OpenPosition {
-  id: string;
+export interface OpenPosition extends BaseOpenPosition{
+  id: number;
+}
+
+export interface BaseOpenPosition {
   comment: string;
   commission: number;
   open_time: string;
@@ -15,4 +18,5 @@ export interface OpenPosition {
   type: number;
   volume: number;
 }
+
 export type OpenPositionsState = EntityState<OpenPosition>;

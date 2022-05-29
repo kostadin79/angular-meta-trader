@@ -3,6 +3,26 @@ import { Update } from '@ngrx/entity';
 
 import { Rate } from 'app-core/models/rate.model';
 
+export const initialRatesLoad = createAction(
+  '[Rate/API] Get Initial Rates Data'
+);
+export const initialRatesLoadSuccess = createAction(
+  '[Rate/API] Get Initial Rates Data Success',
+  props<{ rates: Rate[] }>()
+);
+export const startRatesStream = createAction(
+  '[Rate/API] Start Rates Stream'
+);
+
+export const updateRatesFromStreamSuccess = createAction(
+  '[Rate/API] Update Rates From Stream Success',
+  props<{ rates: Rate[] }>()
+);
+
+
+
+
+
 export const loadRates = createAction(
   '[Rate/API] Load Rates',
   props<{ rates: Rate[] }>()

@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { DataService } from 'app-core/services/data.service';
-import { OpenPosition } from 'app-core/models/open-position';
+import { OpenPosition } from 'app-core/models/open-position.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { OpenPositionFacade } from 'app-core/facades/open-position.facade';
 
 @Component({
   selector: 'app-open-positions',
@@ -12,23 +13,34 @@ import { takeUntil } from 'rxjs/operators';
 export class OpenPositionsComponent implements OnInit, OnDestroy {
   openPositions: OpenPosition[] = [];
   private destroy$ = new Subject();
-  constructor(private dataService: DataService) {}
+  constructor(
+    private openPositionsFacade: OpenPositionFacade,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.dataService
-      .getInitialOpenPositions()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.openPositions = data;
-        console.log('OpenPositionsComponent');
-      });
+    this.openPositionsFacade.loadInitialOpenPositions();
 
-    this.dataService.openPositionsSource$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: OpenPosition[]) => {
-        // console.log('OpenPositionsComponent---->',data);
-        this.openPositions = data;
-      });
+    this.openPositionsFacade.startOpenPositionsStream();
+
+    this.openPositionsFacade.getAllOpenPositions().subscribe((value) => {
+      // console.log('getAllRates', value);
+
+      // this.addDirectionToRate(value);
+      this.openPositions = value;
+      this.cd.detectChanges();
+    });
+
+    // this.openPositionsFacade.getOpenPositionsEntities().subscribe((value) => {
+    //   console.log('getRatesEntities', value);
+    // });
+    // this.openPositionsFacade.getSelectedOpenPositions().subscribe((value) => {
+    //   console.log('getSelectedRate', value);
+    // });
+    // this.openPositionsFacade.gtTotalOpenPositions().subscribe((value) => {
+    //   console.log('gtTotalRates', value);
+    // });
+
   }
   ngOnDestroy() {
     this.destroy$.next(true);

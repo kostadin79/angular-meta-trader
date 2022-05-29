@@ -11,11 +11,14 @@ import { AppState } from 'app-core/models/general-state';
 @Injectable({
   providedIn: 'root',
 })
-export class AppFacade {
+export class ConfigurationFacade {
   constructor(private store: Store<AppState>) {}
+
   webSocketStatus$: Observable<boolean> = this.store.pipe(select(socketStatus));
+
   configuration$: Observable<ConfigurationState> = this.store.pipe(
     select(appConfiguration)
   );
+
 
 }

@@ -5,19 +5,15 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { DataService } from 'app-core/services/data.service';
-import { Rate } from 'app-core/models/rates';
+import { Rate } from 'app-core/models/rate.model';
 import {
   faPause,
   faSquareCaretDown,
   faSquareCaretUp,
 } from '@fortawesome/free-solid-svg-icons';
-import { takeUntil } from 'rxjs/operators';
-
-export interface RateWithDiff extends Rate {
-  direction?: string;
-}
+import { RatesFacade } from 'app-core/facades/rates.facade';
 
 @Component({
   selector: 'app-live-quotes',
@@ -26,45 +22,42 @@ export interface RateWithDiff extends Rate {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LiveQuotesComponent implements OnInit, OnDestroy {
-  ratesListData: RateWithDiff[] = [];
-  subscription!: Subscription;
-  private destroy$ = new Subject();
+  ratesListData: Rate[] = [];
   faPause = faPause;
   faSquareCaretUp = faSquareCaretUp;
   faSquareCaretDown = faSquareCaretDown;
+  private destroy$ = new Subject();
 
   constructor(
     private dataService: DataService,
+    private ratesFacade: RatesFacade,
     private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    // this.dataService.getInitialRates.pipe()
-    this.dataService
-      .getInitialRates()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: Rate[]) => {
-        this.ratesListData = data;
-        this.cd.detectChanges();
-      });
+    this.ratesFacade.loadInitialRates();
 
-    this.subscription = this.dataService.ratesSource$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: Rate[]) => {
-        data.map((newRate: Rate) => {
-          const position = this.ratesListData.findIndex(
-            (value) => value.symbol == newRate.symbol
-          );
-          this.ratesListData[position] = {
-            ...newRate,
-            direction:
-              this.ratesListData[position].bid < newRate.bid ? 'UP' : 'DOWN',
-          };
-          this.cd.detectChanges();
-          // console.log('newRate->', newRate);
-        });
-      });
+    this.ratesFacade.startRatesStream();
+
+    this.ratesFacade.getAllRates().subscribe((value) => {
+
+      // this.addDirectionToRate(value);
+      this.ratesListData = value;
+      this.cd.detectChanges();
+    });
+
+    // this.ratesFacade.getRatesEntities().subscribe((value) => {
+    //   console.log('getRatesEntities', value);
+    // });
+    // this.ratesFacade.getSelectedRate().subscribe((value) => {
+    //   console.log('getSelectedRate', value);
+    // });
+    // this.ratesFacade.gtTotalRates().subscribe((value) => {
+    //   console.log('gtTotalRates', value);
+    // });
+
   }
+
 
   changeChartsRate(event: any) {
     console.log('changeChartsRate()', event);
@@ -73,6 +66,7 @@ export class LiveQuotesComponent implements OnInit, OnDestroy {
   trackByFn(index: number, rate: Rate) {
     return rate.bid;
   }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();

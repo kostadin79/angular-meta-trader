@@ -19,7 +19,8 @@ export class RatesChartsComponent implements OnInit {
 
   ngOnInit() {
     this.dataService.getChart('EURJPY').subscribe((data) => {
-      // console.log('OpenPositionsComponent->', data);
+      console.log('RatesChartsComponent->', data);
+      debugger;
       const formatedChartData = data.map((val: any) => [
         val.time.substr(0, 10).replaceAll('.', '-'),
         val.open,
