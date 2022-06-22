@@ -1,12 +1,17 @@
-import {Injectable} from '@angular/core';
-import {Actions, createEffect, ofType,} from '@ngrx/effects';
-import {initialRatesLoad, initialRatesLoadSuccess, startRatesStream, updateRatesFromStreamSuccess,} from 'app-core/store/actions/rate.actions';
-import {concatMap, map, switchMap, withLatestFrom} from 'rxjs/operators';
-import {DataService} from 'app-core/services/data.service';
-import {select, Store} from '@ngrx/store';
-import {selectAllRates} from 'app-core/store/selectors/rates.selectors';
-import {RatesDirection} from "app-core/models/enumerations";
-import {Rate, rateDirectionStatuses} from "app-core/models/rate.model";
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import {
+  initialRatesLoad,
+  initialRatesLoadSuccess,
+  startRatesStream,
+  updateRatesFromStreamSuccess,
+} from 'app-core/store/actions/rate.actions';
+import { concatMap, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { DataService } from 'app-core/services/data.service';
+import { Store } from '@ngrx/store';
+import { selectAllRates } from 'app-core/store/selectors/rates.selectors';
+import { RatesDirection } from 'app-core/models/enumerations';
+import { Rate, rateDirectionStatuses } from 'app-core/models/rate.model';
 
 @Injectable()
 export class RatesEffects {
@@ -32,11 +37,12 @@ export class RatesEffects {
       ofType(startRatesStream),
       switchMap(() => {
         return this.dataService.startRatesStream().pipe(
-          withLatestFrom( this.store.pipe(select(selectAllRates))),
+          withLatestFrom(this.store.select(selectAllRates)),
           map(([rates, oldRates]) => {
             const changedRates = rates.map((newRate) => {
-
-              const oldRateForCheck = oldRates.find( oldRate => oldRate.id === newRate.id);
+              const oldRateForCheck = oldRates.find(
+                (oldRate) => oldRate.id === newRate.id
+              );
               let direction: rateDirectionStatuses = RatesDirection.Initial;
 
               if (oldRateForCheck) {
@@ -56,9 +62,6 @@ export class RatesEffects {
               return { ...newRate, direction };
             });
 
-
-            console.log(changedRates, rates, oldRates);
-            debugger;
             return changedRates;
           }),
           map((rates: Rate[]) => updateRatesFromStreamSuccess({ rates }))

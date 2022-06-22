@@ -5,12 +5,6 @@ import { RateState } from 'app-core/models/rate.model';
 
 export const ratesEntities = createFeatureSelector<RateState>('rates');
 
-
-
-export const selectUserIds = createSelector(
-  ratesEntities,
-  (state) => state.entities
-);
 export const selectRatesIds = createSelector(
   ratesEntities,
   selectIds
