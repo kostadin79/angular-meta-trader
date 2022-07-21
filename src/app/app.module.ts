@@ -13,7 +13,7 @@ import { CoreStoreModule } from 'app-core/store/core-store.module';
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     CoreStoreModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],

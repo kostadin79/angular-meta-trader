@@ -22,14 +22,22 @@
 </div>
 <div class="row">
   <div class="col-12 col-md-2">
-    <app-live-quotes></app-live-quotes>
+    <ng-container *ngIf="isBrowser">
+      <app-live-quotes></app-live-quotes>
+    </ng-container>
+
   </div>
   <div class="col-12 col-md-10">
     <h2>Charts</h2>
-    <app-rates-charts></app-rates-charts>
+    <ng-container *ngIf="isBrowser">
+      <app-rates-charts></app-rates-charts>
+    </ng-container>
+
     <h2>Positions</h2>
     <div class="table-responsive">
-      <app-open-positions></app-open-positions>
+      <ng-container *ngIf="isBrowser">
+        <app-open-positions></app-open-positions>
+      </ng-container>
     </div>
   </div>
 </div>
