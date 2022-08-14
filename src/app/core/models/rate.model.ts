@@ -1,6 +1,6 @@
 import { EntityState } from '@ngrx/entity';
 
-export interface Rate extends BaseRate  {
+export interface Rate extends BaseRate {
   id: string;
   direction: rateDirectionStatuses;
 }

@@ -1,4 +1,4 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createSelector } from '@ngrx/store';
 import { ConfigurationState } from 'app-core/models/configuration';
 import { AppState } from 'app-core/models/general-state';
 

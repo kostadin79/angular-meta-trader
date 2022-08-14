@@ -1,5 +1,5 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { createReducer, on } from '@ngrx/store';
+import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Rate, RateState } from 'app-core/models/rate.model';
 import {
   addRate,

@@ -1,12 +1,10 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { createReducer, on } from '@ngrx/store';
+import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Chart, ChartsState } from '../../models/chart.model';
 import * as ChartActions from '../actions/chart.actions';
-import {getChartSuccess} from "../actions/chart.actions";
+import { getChartSuccess } from '../actions/chart.actions';
 
 export const chartsFeatureKey = 'charts';
-
-// export type State = EntityState<Chart>;
 
 export const adapter: EntityAdapter<Chart> = createEntityAdapter<Chart>();
 

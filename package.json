@@ -12,7 +12,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "dev:ssr": "ng run angular-meta-trader:serve-ssr",
-    "serve:ssr": "node dist/angular-meta-trader/server/main.js",
+    "serve:ssr": "node --inspect dist/angular-meta-trader/server/main.js",
     "build:ssr": "ng build && ng run angular-meta-trader:server",
     "prerender": "ng run angular-meta-trader:prerender"
   },

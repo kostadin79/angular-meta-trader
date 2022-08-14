@@ -12,7 +12,6 @@ export const getChartSuccess = createAction(
   props<{ chart: Chart }>()
 );
 
-
 export const loadCharts = createAction(
   '[Chart/API] Load Charts',
   props<{ charts: Chart[] }>()
@@ -58,6 +57,4 @@ export const deleteCharts = createAction(
   props<{ ids: string[] }>()
 );
 
-export const clearCharts = createAction(
-  '[Chart/API] Clear Charts'
-);
+export const clearCharts = createAction('[Chart/API] Clear Charts');

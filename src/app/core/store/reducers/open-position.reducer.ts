@@ -1,5 +1,5 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { createReducer, on } from '@ngrx/store';
+import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import {
   OpenPosition,
   OpenPositionsState,
@@ -14,13 +14,12 @@ import {
   deleteOpenPosition,
   deleteOpenPositions,
   loadOpenPositions,
-  clearOpenPositions, initialOpenPositionsLoadSuccess, updateOpenPositionsFromStreamSuccess,
+  clearOpenPositions,
+  initialOpenPositionsLoadSuccess,
+  updateOpenPositionsFromStreamSuccess,
 } from 'app-core/store/actions/open-position.actions';
-import { initialRatesLoadSuccess } from 'app-core/store/actions/rate.actions';
 
 export const openPositionsFeatureKey = 'openPositions';
-
-// export type OpenPositionsState = EntityState<OpenPosition>;
 
 export const adapter: EntityAdapter<OpenPosition> =
   createEntityAdapter<OpenPosition>();
@@ -40,8 +39,10 @@ export const reducer = createReducer(
   on(addOpenPositions, initialOpenPositionsLoadSuccess, (state, action) =>
     adapter.addMany(action.openPositions, state)
   ),
-  on( upsertOpenPositions,updateOpenPositionsFromStreamSuccess, (state, action) =>
-    adapter.upsertMany(action.openPositions, state)
+  on(
+    upsertOpenPositions,
+    updateOpenPositionsFromStreamSuccess,
+    (state, action) => adapter.upsertMany(action.openPositions, state)
   ),
   on(updateOpenPosition, (state, action) =>
     adapter.updateOne(action.openPosition, state)

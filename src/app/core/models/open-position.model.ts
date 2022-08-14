@@ -1,6 +1,6 @@
-import { EntityState } from "@ngrx/entity";
+import { EntityState } from '@ngrx/entity';
 
-export interface OpenPosition extends BaseOpenPosition{
+export interface OpenPosition extends BaseOpenPosition {
   id: number;
 }
 

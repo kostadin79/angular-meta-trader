@@ -1,15 +1,11 @@
-import {
-  createFeatureSelector,
-  createSelector,
-  MemoizedSelector,
-} from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 import {
   selectIds,
   selectEntities,
   selectAll,
   selectTotal,
 } from 'app-core/store/reducers/chart.reducer';
-import { Chart, ChartsState } from 'app-core/models/chart.model';
+import { ChartsState } from 'app-core/models/chart.model';
 export const chartsEntities = createFeatureSelector<ChartsState>('Charts');
 
 export const selectChartsIds = createSelector(chartsEntities, selectIds);

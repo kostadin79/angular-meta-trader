@@ -19,6 +19,4 @@ export class ConfigurationFacade {
   configuration$: Observable<ConfigurationState> = this.store.pipe(
     select(appConfiguration)
   );
-
-
 }

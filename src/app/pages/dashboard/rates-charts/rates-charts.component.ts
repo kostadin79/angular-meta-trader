@@ -5,7 +5,7 @@ import { take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { formatChartData, splitData, calculateMA } from 'app-core/utils/utils';
 import { whenTruthy } from 'app-core/utils/rxjs.helper';
-import type { EChartsOption, ECharts, SetOptionOpts } from 'echarts';
+// import type { EChartsOption, ECharts, SetOptionOpts } from 'echarts';
 
 @Component({
   selector: 'app-rates-charts',
@@ -192,9 +192,7 @@ export class RatesChartsComponent implements OnInit, OnDestroy {
               },
               tooltip: {
                 formatter: function (param: any) {
-                  debugger;
                   param = param[0];
-                  console.log('param', param);
                   return [
                     'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
                     'Open: ' + param.data[0] + '<br/>',
@@ -255,7 +253,7 @@ export class RatesChartsComponent implements OnInit, OnDestroy {
 
   onChartInit(ec: any) {
     this.echartsInstance = ec;
-    console.log(this.echartsInstance);
+    // console.log(this.echartsInstance);
   }
 
   resizeChart() {

@@ -3,7 +3,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'app-core/models/general-state';
 import { getChart } from 'app-core/store/actions/chart.actions';
 import {
-  selectAllCharts, selectChartEntity,
+  selectAllCharts,
+  selectChartEntity,
   selectChartsEntities,
   selectChartsIds,
   selectTotalCharts,
@@ -15,20 +16,10 @@ import {
 export class ChartsFacade {
   constructor(private store: Store<AppState>) {}
 
-  // webSocketStatus$: Observable<boolean> = this.store.pipe(select(socketStatus));
-  //
-  // configuration$: Observable<ConfigurationState> = this.store.pipe(
-  //   select(appConfiguration)
-  // );
-
   getChart(chart: string) {
     this.store.dispatch(getChart({ chart }));
   }
 
-  // startRatesStream() {
-  //   this.store.dispatch(startRatesStream());
-  // }
-  //
   getAllChartsIds() {
     return this.store.select(selectChartsIds);
   }
@@ -44,6 +35,7 @@ export class ChartsFacade {
   gtTotalCharts() {
     return this.store.select(selectTotalCharts);
   }
+
   getChartById(id: string) {
     return this.store.select(selectChartEntity({ id }));
   }

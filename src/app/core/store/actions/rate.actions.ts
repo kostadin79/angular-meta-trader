@@ -19,10 +19,6 @@ export const updateRatesFromStreamSuccess = createAction(
   props<{ rates: Rate[] }>()
 );
 
-
-
-
-
 export const loadRates = createAction(
   '[Rate/API] Load Rates',
   props<{ rates: Rate[] }>()

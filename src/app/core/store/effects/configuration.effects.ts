@@ -1,13 +1,15 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Actions, createEffect } from '@ngrx/effects';
-import { ROOT_EFFECTS_INIT, ofType } from '@ngrx/effects';
+import { ofType } from '@ngrx/effects';
 import {
   loadConnectWebsockets,
   loadConnectWebsocketsSuccess,
 } from 'app-core/store/actions/configuration.actions';
 import { concatMap, map, tap, filter } from 'rxjs/operators';
 import { DataService } from 'app-core/services/data.service';
+
+const ACTION_TYPE = 'Transfer State from SSR';
 
 @Injectable()
 export class ConfigurationEffects {
@@ -19,7 +21,7 @@ export class ConfigurationEffects {
 
   init$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(ROOT_EFFECTS_INIT),
+      ofType(ACTION_TYPE),
       filter(() => isPlatformBrowser(this.platformId)),
       concatMap(() => [loadConnectWebsockets()])
     );

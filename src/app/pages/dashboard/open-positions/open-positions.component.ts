@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { DataService } from 'app-core/services/data.service';
 import { OpenPosition } from 'app-core/models/open-position.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -23,24 +22,13 @@ export class OpenPositionsComponent implements OnInit, OnDestroy {
 
     this.openPositionsFacade.startOpenPositionsStream();
 
-    this.openPositionsFacade.getAllOpenPositions().subscribe((value) => {
-      // console.log('getAllRates', value);
-
-      // this.addDirectionToRate(value);
-      this.openPositions = value;
-      this.cd.detectChanges();
-    });
-
-    // this.openPositionsFacade.getOpenPositionsEntities().subscribe((value) => {
-    //   console.log('getRatesEntities', value);
-    // });
-    // this.openPositionsFacade.getSelectedOpenPositions().subscribe((value) => {
-    //   console.log('getSelectedRate', value);
-    // });
-    // this.openPositionsFacade.gtTotalOpenPositions().subscribe((value) => {
-    //   console.log('gtTotalRates', value);
-    // });
-
+    this.openPositionsFacade
+      .getAllOpenPositions()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((value) => {
+        this.openPositions = value;
+        this.cd.detectChanges();
+      });
   }
   ngOnDestroy() {
     this.destroy$.next(true);

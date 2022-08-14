@@ -1,4 +1,4 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { ConfigurationState } from 'app-core/models/configuration';
 import { loadConnectWebsocketsSuccess } from 'app-core/store/actions/configuration.actions';
 

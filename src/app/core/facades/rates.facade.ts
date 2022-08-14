@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {select, Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState } from 'app-core/models/general-state';
 import {
   initialRatesLoad,
@@ -18,12 +18,6 @@ import {
 export class RatesFacade {
   constructor(private store: Store<AppState>) {}
 
-  // webSocketStatus$: Observable<boolean> = this.store.pipe(select(socketStatus));
-  //
-  // configuration$: Observable<ConfigurationState> = this.store.pipe(
-  //   select(appConfiguration)
-  // );
-
   loadInitialRates() {
     this.store.dispatch(initialRatesLoad());
   }
@@ -33,18 +27,18 @@ export class RatesFacade {
   }
 
   getSelectedRate() {
-    return this.store.pipe(select(selectRatesIds));
+    return this.store.select(selectRatesIds);
   }
 
   getRatesEntities() {
-    return this.store.pipe(select(selectRatesEntities));
+    return this.store.select(selectRatesEntities);
   }
 
   getAllRates() {
-    return this.store.pipe(select(selectAllRates));
+    return this.store.select(selectAllRates);
   }
 
   gtTotalRates() {
-    return this.store.pipe(select(selectTotalRates));
+    return this.store.select(selectTotalRates);
   }
 }

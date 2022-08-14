@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {
-  initialRatesLoad,
-  initialRatesLoadSuccess,
-  startRatesStream,
-  updateRatesFromStreamSuccess,
-} from 'app-core/store/actions/rate.actions';
 import { concatMap, map } from 'rxjs/operators';
 import {
   initialOpenPositionsLoad,
-  initialOpenPositionsLoadSuccess, startOpenPositionsStream, updateOpenPositionsFromStreamSuccess,
+  initialOpenPositionsLoadSuccess,
+  startOpenPositionsStream,
+  updateOpenPositionsFromStreamSuccess,
 } from 'app-core/store/actions/open-position.actions';
 import { DataService } from 'app-core/services/data.service';
 

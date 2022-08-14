@@ -3,7 +3,6 @@ import { Update } from '@ngrx/entity';
 
 import { OpenPosition } from '../../models/open-position.model';
 
-
 export const initialOpenPositionsLoad = createAction(
   '[OpenPosition/API] Get Initial Open Position Data'
 );
@@ -19,10 +18,6 @@ export const updateOpenPositionsFromStreamSuccess = createAction(
   '[OpenPosition/API] Update Open Position From Stream Success',
   props<{ openPositions: OpenPosition[] }>()
 );
-
-
-
-
 
 export const loadOpenPositions = createAction(
   '[OpenPosition/API] Load OpenPositions',

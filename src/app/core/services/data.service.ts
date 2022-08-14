@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { Injectable, Optional, SkipSelf } from '@angular/core';
 import { map, filter, take, switchMap, tap, catchError } from 'rxjs/operators';
 import { Subject, Observable, of, throwError } from 'rxjs';
 import { BaseRate, Rate } from '../models/rate.model';
@@ -20,8 +19,6 @@ import { SocketService } from 'app-core/services/socket.service';
 export class DataService {
   ratesList: string[] = ratesList;
 
-  private socket$: WebSocketSubject<any> = webSocket('ws://127.0.0.1:8888');
-
   private messageFromSocket$: Subject<any> = new Subject();
 
   public ratesSource$: Observable<Rate[]> = this.messageFromSocket$
@@ -41,33 +38,25 @@ export class DataService {
       map((val: BaseOpenPosition[]) => convertOpenPositions(val))
     );
 
-  constructor(private socketService: SocketService) {}
+  constructor(@Optional() private socketService: SocketService) {}
 
   startWebSocket() {
-    of(true).pipe(
-      switchMap(() =>
-        this.socketService.messageFromWebSocket$.pipe(
-          tap((data) => {
-            this.messageFromSocket$.next(data);
-          }),
-          catchError((error) => throwError(error))
+    of(true)
+      .pipe(
+        switchMap(() =>
+          this.socketService.messageFromWebSocket$.pipe(
+            tap((data) => {
+              this.messageFromSocket$.next(data);
+            }),
+            catchError((error) => throwError(error))
+          )
         )
       )
-    );
-
-    // this.socketService.messageFromWebSocket$.subscribe(
-    //   (data) => {
-    //     this.messageFromSocket$.next(data);
-    //   },
-    //   (error) => console.log(error)
-    // );
+      .subscribe();
   }
 
   sentMessageToSocket(event: string, data?: unknown) {
     this.socketService.sentMessageToSocket(event, data);
-    // if (this.socket$) {
-    //   this.socket$.next(data ? { event, data } : { event });
-    // }
   }
 
   startRatesStream() {

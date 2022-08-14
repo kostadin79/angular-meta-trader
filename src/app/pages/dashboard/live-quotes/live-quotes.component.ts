@@ -14,6 +14,7 @@ import {
   faSquareCaretUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { RatesFacade } from 'app-core/facades/rates.facade';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-live-quotes',
@@ -39,25 +40,14 @@ export class LiveQuotesComponent implements OnInit, OnDestroy {
 
     this.ratesFacade.startRatesStream();
 
-    this.ratesFacade.getAllRates().subscribe((value) => {
-
-      // this.addDirectionToRate(value);
-      this.ratesListData = value;
-      this.cd.detectChanges();
-    });
-
-    // this.ratesFacade.getRatesEntities().subscribe((value) => {
-    //   console.log('getRatesEntities', value);
-    // });
-    // this.ratesFacade.getSelectedRate().subscribe((value) => {
-    //   console.log('getSelectedRate', value);
-    // });
-    // this.ratesFacade.gtTotalRates().subscribe((value) => {
-    //   console.log('gtTotalRates', value);
-    // });
-
+    this.ratesFacade
+      .getAllRates()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((value) => {
+        this.ratesListData = value;
+        this.cd.detectChanges();
+      });
   }
-
 
   changeChartsRate(event: any) {
     console.log('changeChartsRate()', event);
