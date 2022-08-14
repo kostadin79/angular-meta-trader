@@ -1,5 +1,7 @@
 # Angular Dashboard to Meta Trader 4 terminal
 
+It's a web dashboard for Meta Trader 4 terminal. The project is based on Angular with NGRX and uses WebSocket to receive data. SSR is implemented. 
+
 ## Before to start
 
 Before to start the project, the Meta Trader 4 terminal must be started with MetaTrader4Bridge2.mq4 activated.
@@ -21,7 +23,7 @@ export const WS_ENDPOINT = 'ws://localhost:4200/socket-ws';
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng run angular-meta-trader:serve-ssr:development`. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Build
 

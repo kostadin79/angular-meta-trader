@@ -1,6 +1,7 @@
 {
   "name": "angular-meta-trader",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "description": "Angular UI with NGRX, SSR and WebSocket for Meta Trader forex terminal",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
