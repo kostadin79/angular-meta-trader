@@ -1,10 +1,10 @@
-import { Injectable, Optional, SkipSelf } from '@angular/core';
-import { map, filter, take, switchMap, tap, catchError } from 'rxjs/operators';
-import { Subject, Observable, of, throwError } from 'rxjs';
+import { Injectable, Optional } from '@angular/core';
+import { map, filter, take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { BaseRate, Rate } from '../models/rate.model';
 import { BaseOpenPosition, OpenPosition } from '../models/open-position.model';
 import { ratesList } from '../../../environments/environment';
-import { SocketMessage } from '../models/socket-message';
+import { BaseSocketData, SocketMessage} from '../models/socket-message';
 import { Chart, BaseChart } from '../models/chart.model';
 import {
   convertChart,
@@ -19,58 +19,37 @@ import { SocketService } from 'app-core/services/socket.service';
 export class DataService {
   ratesList: string[] = ratesList;
 
-  private messageFromSocket$: Subject<any> = new Subject();
-
-  public ratesSource$: Observable<Rate[]> = this.messageFromSocket$
-    .asObservable()
-    .pipe(
-      filter((data: SocketMessage<BaseRate>) => data.event === 'PRICES'),
-      map((val: SocketMessage<BaseRate>): BaseRate[] => val.data),
-      map((val: BaseRate[]) => convertRates(val))
-    );
-
-  // public accountSource$: Observable<any>;
-
-  public openPositionsSource$: Observable<OpenPosition[]> =
-    this.messageFromSocket$.asObservable().pipe(
-      filter((data: SocketMessage<OpenPosition>) => data.event == 'ORDERS'),
-      map((val: SocketMessage<OpenPosition>) => val.data),
-      map((val: BaseOpenPosition[]) => convertOpenPositions(val))
-    );
-
   constructor(@Optional() private socketService: SocketService) {}
 
-  startWebSocket() {
-    of(true)
-      .pipe(
-        switchMap(() =>
-          this.socketService.messageFromWebSocket$.pipe(
-            tap((data) => {
-              this.messageFromSocket$.next(data);
-            }),
-            catchError((error) => throwError(error))
-          )
-        )
-      )
-      .subscribe();
+  // startWebSocket() {
+  //   if (this.socketService) {
+  //     this.socketService.startWebSocket();
+  //   }
+  // }
+
+  sentMessageToSocket(event: string, data?: string | string[]) {
+    if (this.socketService) {
+      this.socketService.sentMessageToSocket(event, data);
+    }
   }
 
-  sentMessageToSocket(event: string, data?: unknown) {
-    this.socketService.sentMessageToSocket(event, data);
-  }
-
-  startRatesStream() {
+  startRatesStream(): Observable<Rate[]> {
     this.sentMessageToSocket('SUBSCRIBE_RATES', this.ratesList);
-    return this.ratesSource$;
+    return this.socketService.messageFromWebSocket$.pipe(
+      filter((data: SocketMessage<BaseSocketData>) => data.event === 'PRICES'),
+      map((val: SocketMessage<BaseRate>) => val.data),
+      map((val: BaseRate[]) => convertRates(val))
+    );
   }
+
   stopRatesStream() {
     this.sentMessageToSocket('UNSUBSCRIBE_RATES', this.ratesList);
   }
 
   getInitialRates(): Observable<Rate[]> {
     this.sentMessageToSocket('MULTIPLE_RATES', this.ratesList);
-    return this.messageFromSocket$.asObservable().pipe(
-      filter((data: SocketMessage<BaseRate>) => data.event == 'MULTIPLE_RATES'),
+    return this.socketService.messageFromWebSocket$.pipe(
+      filter((data: SocketMessage<BaseSocketData>) => data.event == 'MULTIPLE_RATES'),
       map((val: SocketMessage<BaseRate>) => val.data),
       map((rates: BaseRate[]) => convertRates(rates)),
       take(1)
@@ -79,10 +58,9 @@ export class DataService {
 
   getInitialOpenPositions(): Observable<OpenPosition[]> {
     this.sentMessageToSocket('OPEN_POSITIONS');
-    return this.messageFromSocket$.asObservable().pipe(
+    return this.socketService.messageFromWebSocket$.pipe(
       filter(
-        (data: SocketMessage<BaseOpenPosition>) =>
-          data.event === 'OPEN_POSITIONS'
+        (data: SocketMessage<BaseSocketData>) => data.event === 'OPEN_POSITIONS'
       ),
       map((val: SocketMessage<BaseOpenPosition>) => val.data),
       map((val: BaseOpenPosition[]) => convertOpenPositions(val)),
@@ -90,9 +68,13 @@ export class DataService {
     );
   }
 
-  startOpenPositionsStream() {
+  startOpenPositionsStream(): Observable<OpenPosition[]> {
     this.sentMessageToSocket('SUBSCRIBE_OPEN_POSITIONS');
-    return this.openPositionsSource$;
+    return this.socketService.messageFromWebSocket$.pipe(
+      filter((data: SocketMessage<BaseSocketData>) => data.event == 'ORDERS'),
+      map((val: SocketMessage<BaseOpenPosition>) => val.data),
+      map((val: BaseOpenPosition[]) => convertOpenPositions(val))
+    );
   }
   stopOpenPositionStream() {
     this.sentMessageToSocket('UNSUBSCRIBE_OPEN_POSITIONS');
@@ -100,9 +82,9 @@ export class DataService {
 
   getChart(symbol: string): Observable<Chart> {
     this.sentMessageToSocket('CHART', symbol);
-    return this.messageFromSocket$.asObservable().pipe(
-      filter((data: SocketMessage<BaseChart>) => data.event === 'CHART'),
-      map((val) => val.data),
+    return this.socketService.messageFromWebSocket$.pipe(
+      filter((data: SocketMessage<BaseSocketData>) => data.event === 'CHART'),
+      map((val: SocketMessage<BaseChart>) => val.data),
       map((val: BaseChart[]) => convertChart(val, symbol)),
       take(1)
     );

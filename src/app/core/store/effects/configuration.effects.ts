@@ -1,6 +1,6 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Actions, createEffect } from '@ngrx/effects';
+import { Actions, createEffect, ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { ofType } from '@ngrx/effects';
 import {
   loadConnectWebsockets,
@@ -29,10 +29,7 @@ export class ConfigurationEffects {
 
   loadWebSocket$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(loadConnectWebsockets),
-      tap(() => {
-        this.dataService.startWebSocket();
-      }),
+      ofType(ROOT_EFFECTS_INIT, loadConnectWebsockets),
       map(loadConnectWebsocketsSuccess)
     );
   });
