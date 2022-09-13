@@ -12,6 +12,7 @@ import { OpenPositionsEffects } from 'app-core/store/effects/open-positions.effe
 import { ChartsEffects } from 'app-core/store/effects/charts.effects';
 import { TransferState } from '@angular/platform-browser';
 import { setStateOnBrowser, stateTransferFromServerToBrowser} from '../utils/state-transfer.helper';
+import {storeDevtoolsModule} from "../../replacements/store-devtools.module";
 
 export const reducers: ActionReducerMap<AppState> = {
   configuration: Configuration.reducer,
@@ -31,6 +32,7 @@ const metaReducers: MetaReducer<AppState>[] = [setStateOnBrowser];
       OpenPositionsEffects,
       ChartsEffects,
     ]),
+    storeDevtoolsModule
   ],
   providers: [
     {
