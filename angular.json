@@ -18,8 +18,12 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "customWebpackConfig": {
+            "path": "./templates/webpack.custom.ts",
+            "replaceDuplicatePlugins": true
+            },
             "outputPath": "dist/angular-meta-trader/browser",
             "index": "src/index.html",
             "main": "src/main.browser.ts",
@@ -79,7 +83,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
               "browserTarget": "angular-meta-trader:build:production"
@@ -152,8 +156,12 @@
           }
         },
         "server": {
-          "builder": "@angular-devkit/build-angular:server",
+          "builder": "@angular-builders/custom-webpack:server",
           "options": {
+            "customWebpackConfig": {
+              "path": "./templates/webpack.custom.ts",
+              "replaceDuplicatePlugins": true
+            },
             "outputPath": "dist/angular-meta-trader/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",

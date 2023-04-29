@@ -2,9 +2,13 @@
 
 import { SocketRequest } from 'app-core/models/socket-message';
 
-const socket = new WebSocket('ws://127.0.0.1:8888');
+const socketAddress = `ws://${WS_SOCKET ?? '127.0.0.1:8888'}`;
 
-addEventListener( 'message', ({ data }: MessageEvent<SocketRequest>) => {socket.send(JSON.stringify(data));});
+const socket = new WebSocket(socketAddress);
+
+addEventListener('message', ({ data }: MessageEvent<SocketRequest>) => {
+  socket.send(JSON.stringify(data));
+});
 
 socket.onopen = () => {
   postMessage({ event: 'SOCKET_IS_STARTED' });

@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
 };
-export const WS_ENDPOINT = 'ws://localhost:4200/socket-ws';
+
+
+
 
 export const ratesList = [
   'EURUSD',
