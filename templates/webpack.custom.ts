@@ -14,13 +14,16 @@ export default (
   const production = !!( configurations?.includes('production') || angularJsonConfig.buildOptimizer);
   const ngrxRuntimeChecks = !production;
 
+  const userSocketAddress = JSON.stringify(process.env['WS_SOCKET_URL']);
+  const defaultSocketAddress = JSON.stringify('127.0.0.1:8888');
+
   const newConfig = config?.plugins
     ? {
         ...config,
         plugins: [
           ...config.plugins,
           new DefinePlugin({
-            WS_SOCKET: process.env['WS_SOCKET_URL'],
+            WS_SOCKET: `${ userSocketAddress ? userSocketAddress : defaultSocketAddress }`  ,
             PRODUCTION_MODE: production,
             SSR: targetOptions.target === 'server',
             NGRX_RUNTIME_CHECKS: ngrxRuntimeChecks
@@ -28,8 +31,6 @@ export default (
         ],
       }
     : {};
-
-
 
   return config?.plugins ? newConfig : config;
 };

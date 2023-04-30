@@ -69,7 +69,7 @@
                   "with": "src/app/replacements/store-devtools.module.production.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "none"
             },
             "development": {
               "buildOptimizer": false,
