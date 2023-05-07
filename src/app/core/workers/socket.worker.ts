@@ -2,7 +2,7 @@
 
 import { SocketRequest } from 'app-core/models/socket-message';
 
-const socketAddress = `ws://${WS_SOCKET}`;
+const socketAddress = SSL_SOCKET ? `wss://${WS_SOCKET}` : `ws://${WS_SOCKET}`;
 
 const socket = new WebSocket(socketAddress);
 

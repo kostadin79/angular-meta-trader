@@ -23,10 +23,11 @@ export default (
         plugins: [
           ...config.plugins,
           new DefinePlugin({
-            WS_SOCKET: `${ userSocketAddress ? userSocketAddress : defaultSocketAddress }`  ,
+            WS_SOCKET: userSocketAddress ?? defaultSocketAddress,
+            SSL_SOCKET: !!userSocketAddress,
             PRODUCTION_MODE: production,
             SSR: targetOptions.target === 'server',
-            NGRX_RUNTIME_CHECKS: ngrxRuntimeChecks
+            NGRX_RUNTIME_CHECKS: ngrxRuntimeChecks,
           }),
         ],
       }
