@@ -1,31 +1,61 @@
-# Angular Dashboard to Meta Trader 4 terminal
+# Angular Dashboard for Meta Trader 4 terminal
 
-It's a web dashboard for Meta Trader 4 terminal. The project is based on Angular with NGRX and uses WebSocket to receive data. SSR is implemented. 
+It's a web dashboard for Meta Trader 4 terminal,  based on Angular.
 
-## Before to start
+## Project Demo
 
-Before to start the project, the Meta Trader 4 terminal must be started with MetaTrader4Bridge2.mq4 activated.
-More about that [MQL 4 Folder for ZeroMQ for Meta Trader 4](https://github.com/kostadin79/zeromq-meta-trader)
-
-NestJS socket gateway must be started. More about that [Meta Trader 4 with NestJS Socket Gateway](https://github.com/kostadin79/nest-meta-trader)
-
-## Example usage
-
-The socket gateway port can be changed - environment.ts
-```ts
-export const environment = {
-  production: false,
-};
-export const WS_ENDPOINT = 'ws://localhost:4200/socket-ws';
-```
+Demo project URL: [https://rcdsolutions.online](https://rcdsolutions.online)
+"rcdsolutions.online" is a domain for demo purposes of my personal project. 
+The domain is required for SSL certificate. Without SSL certificate the service worker cannot be registered.
 
 ![Angular Dashboard to Meta Trader 4 terminal](https://user-images.githubusercontent.com/39057409/166572619-b0ed0a00-1978-4d4e-b8d3-5efb62b66710.png)
 
-## Development server
+## Before to start
 
-Run `ng run angular-meta-trader:serve-ssr:development`. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Before running the project, the Meta Trader 4 terminal must be started with MetaTrader4Bridge2.mq4 activated.
+More about that [MQL 4 Folder for ZeroMQ for Meta Trader 4](https://github.com/kostadin79/zeromq-meta-trader)
 
-## Build
+And NestJS application must be started. 
+More about that [Meta Trader 4 with NestJS Socket Gateway](https://github.com/kostadin79/nest-meta-trader)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## WebSocket configuration
+
+The default socket address configuration is located in templates/webpack.custom.ts
+```ts
+const defaultSocketAddress = JSON.stringify('127.0.0.1:8888');
+```
+
+### Start development 
+
+Run `npm run start`. 
+The project will be available on `http://localhost:4200`. 
+
+### Start development with SSR
+
+Run `npm run dev:ssr` to build the project.
+The project will be available on `http://localhost:4200`.
+
+### Build production
+
+Run `npm run build` to build the project.
+
+### Build and start production with SSR
+
+Run `npm run build:ssr` to build the project with SSR.
+Run `npm run serve:ssr` to start.
+The project will be available on `http://localhost:4200`.
+
+### SSR debugging
+
+Run `npm run build:ssr` to build the project with SSR.
+Run `npm run serve:ssr:inspect` to start.
+SSR compilation will be available for debugging in DevTools for Node
+
+### Docker compose
+
+Run `docker compose up` to start the Angular SSR and NGINX.
+The project will be available on `http://localhost`.
+
+
+
 
