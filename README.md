@@ -2,9 +2,9 @@
 
 It's a web dashboard for Meta Trader 4 terminal,  based on Angular.
 
-## Project Demo
+## Demo
 
-Demo project URL: [https://rcdsolutions.online](https://rcdsolutions.online)
+Project demo URL: [https://rcdsolutions.online](https://rcdsolutions.online)
 "rcdsolutions.online" is a domain for demo purposes of my personal project. 
 The domain is required for SSL certificate. Without SSL certificate the service worker cannot be registered.
 
@@ -55,6 +55,16 @@ SSR compilation will be available for debugging in DevTools for Node
 
 Run `docker compose up` to start the Angular SSR and NGINX.
 The project will be available on `http://localhost`.
+
+## Features
+
+- Websocket communication
+- Service Worker
+- Web Worker, dedicated for Websocket
+- State Transfer and SSR
+- NGINX proxy
+
+[Project 'Angular NestJS MetaTrader' description ](https://github.com/kostadin79/angular-nest-metatrader)
 
 
 
