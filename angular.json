@@ -8,9 +8,6 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
         }
       },
       "root": "",
@@ -18,16 +15,14 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "customWebpackConfig": {
-            "path": "./templates/webpack.custom.ts",
-            "replaceDuplicatePlugins": true
-            },
-            "outputPath": "dist/angular-meta-trader/browser",
+            "outputPath": "dist/angular-16-test2/browser",
             "index": "src/index.html",
             "main": "src/main.browser.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -41,6 +36,8 @@
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
             ],
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json",
             "webWorkerTsConfig": "tsconfig.worker.json"
           },
           "configurations": {
@@ -57,8 +54,6 @@
                   "maximumError": "4kb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -69,7 +64,7 @@
                   "with": "src/app/replacements/store-devtools.module.production.ts"
                 }
               ],
-              "outputHashing": "none"
+              "outputHashing": "all"
             },
             "development": {
               "buildOptimizer": false,
@@ -83,7 +78,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-builders/custom-webpack:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
               "browserTarget": "angular-meta-trader:build:production"
@@ -101,67 +96,19 @@
           }
         },
         "test": {
-          "builder": "@angular-builders/jest:run",
+          "builder": "@angular-devkit/build-angular:jest",
           "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": [],
             "webWorkerTsConfig": "tsconfig.worker.json"
           }
         },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
-          }
-        },
-        "cypress-run": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "angular-meta-trader:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "angular-meta-trader:serve:production"
-            }
-          }
-        },
-        "cypress-open": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "watch": true,
-            "headless": false
-          }
-        },
-        "e2e": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "angular-meta-trader:serve",
-            "watch": true,
-            "headless": false
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "angular-meta-trader:serve:production"
-            }
-          }
-        },
         "server": {
-          "builder": "@angular-builders/custom-webpack:server",
+          "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "customWebpackConfig": {
-              "path": "./templates/webpack.custom.ts",
-              "replaceDuplicatePlugins": true
-            },
             "outputPath": "dist/angular-meta-trader/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
@@ -178,9 +125,11 @@
               ]
             },
             "development": {
+              "buildOptimizer": false,
               "optimization": false,
               "sourceMap": true,
-              "extractLicenses": false
+              "extractLicenses": false,
+              "vendorChunk": true
             }
           },
           "defaultConfiguration": "production"
@@ -217,12 +166,70 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "angular-meta-trader:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angular-meta-trader:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "ct": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "angular-meta-trader:serve",
+            "watch": true,
+            "headless": false,
+            "testingType": "component"
+          },
+          "configurations": {
+            "development": {
+              "devServerTarget": "angular-meta-trader:serve:development"
+            }
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "angular-meta-trader:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angular-meta-trader:serve:production"
+            }
+          }
         }
       }
     }
   },
-  "defaultProject": "angular-meta-trader",
   "cli": {
-    "defaultCollection": "@ngrx/schematics"
+    "schematicCollections": [
+      "@cypress/schematic",
+      "@angular-eslint/schematics",
+      "@schematics/angular",
+      "@ngrx/schematics"
+    ]
   }
 }

@@ -1,3 +1,4 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
@@ -6,9 +7,9 @@
       "es2018",
       "webworker"
     ],
+    "types": []
   },
   "include": [
-    "src/typings.d.ts",
     "src/**/*.worker.ts"
   ]
 }

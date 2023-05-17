@@ -10,9 +10,9 @@ import { ConfigurationEffects } from 'app-core/store/effects/configuration.effec
 import { RatesEffects } from 'app-core/store/effects/rates.effects';
 import { OpenPositionsEffects } from 'app-core/store/effects/open-positions.effects';
 import { ChartsEffects } from 'app-core/store/effects/charts.effects';
-import { TransferState } from '@angular/platform-browser';
+import { TransferState } from '@angular/core';
 import { setStateOnBrowser, stateTransferFromServerToBrowser} from '../utils/state-transfer.helper';
-import {storeDevtoolsModule} from "../../replacements/store-devtools.module";
+import { storeDevtoolsModule } from '../../replacements/store-devtools.module';
 
 export const reducers: ActionReducerMap<AppState> = {
   configuration: Configuration.reducer,
