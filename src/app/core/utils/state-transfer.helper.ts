@@ -1,4 +1,4 @@
-import { TransferState, makeStateKey } from '@angular/platform-browser';
+import { makeStateKey, TransferState } from '@angular/core';
 import { Actions } from '@ngrx/effects';
 import { Action, ActionReducer, Store } from '@ngrx/store';
 import { first, take } from 'rxjs/operators';
