@@ -10,9 +10,9 @@ The domain is required for SSL certificate. Without SSL certificate the service 
 
 ![Angular Dashboard to Meta Trader 4 terminal](https://user-images.githubusercontent.com/39057409/166572619-b0ed0a00-1978-4d4e-b8d3-5efb62b66710.png)
 
-## Before to start
+## Before running the project
 
-Before running the project, the Meta Trader 4 terminal must be started with MetaTrader4Bridge2.mq4 activated.
+Before running the project, the MetaTrader4 terminal must be started with MetaTrader4Bridge2.mq4 activated.
 More about that [MQL 4 Folder for ZeroMQ for Meta Trader 4](https://github.com/kostadin79/zeromq-meta-trader)
 
 And NestJS application must be started. 
