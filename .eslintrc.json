@@ -1,22 +1,40 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json",
+          "tsconfig.spec.json"
+        ],
+        "createDefaultProgram": true
+      },
       "extends": [
-        "eslint:recommended",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
         "plugin:@typescript-eslint/recommended",
         "plugin:@ngrx/recommended",
         "plugin:prettier/recommended"
       ],
+      "plugins": [
+        "rxjs",
+        "rxjs-angular",
+        "ban",
+        "etc",
+        "jest",
+        "unicorn",
+        "unused-imports"
+      ],
       "rules": {
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": ["app"],
+            "style": "kebab-case"
+          }
+        ],
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -25,39 +43,394 @@
             "style": "camelCase"
           }
         ],
-        "@angular-eslint/component-selector": [
+        "@angular-eslint/sort-ngmodule-metadata-arrays": "warn",
+        "@ngrx/avoid-combining-selectors": "off",
+        "@ngrx/avoid-mapping-selectors": "off",
+        "@ngrx/no-store-subscription": "off",
+        "@ngrx/prefer-effect-callback-in-block-statement": "off",
+        "@ngrx/prefer-concat-latest-from": "off",
+        "@ngrx/prefix-selectors-with-select": "off",
+        "@ngrx/select-style": ["warn", "operator"],
+        "@typescript-eslint/ban-tslint-comment": "error",
+        "@typescript-eslint/ban-types": [
           "error",
           {
-            "type": "element",
-            "prefix": "app",
-            "style": "kebab-case"
+            "types": {
+              "Object": {
+                "message": "Use {} instead."
+              },
+              "Array": {
+                "message": "Use [] instead."
+              },
+              "String": {
+                "message": "Use 'string'"
+              },
+              "Boolean": {
+                "message": "Use 'boolean'"
+              },
+              "Number": {
+                "message": "Use 'number'"
+              },
+              "HttpErrorResponse": {
+                "message": "HttpErrorResponse should not be used directly."
+              }
+            },
+            "extendDefaults": false
           }
-        ]
+        ],
+        "@typescript-eslint/dot-notation": "warn",
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error",
+          {
+            "accessibility": "no-public"
+          }
+        ],
+        "@typescript-eslint/member-ordering": [
+          "warn",
+          {
+            "default": [
+              "public-static-field",
+              "static-field",
+              "instance-field",
+              "public-static-method",
+              "static-method",
+              "instance-method"
+            ]
+          }
+        ],
+        "@typescript-eslint/method-signature-style": ["warn", "method"],
+        "@typescript-eslint/naming-convention": [
+          "warn",
+          {
+            "selector": "variable",
+            "modifiers": ["const"],
+            "format": ["camelCase", "UPPER_CASE"],
+            "filter": {
+              "regex": "_",
+              "match": false
+            }
+          },
+          {
+            "selector": "typeLike",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "function",
+            "format": ["camelCase"]
+          }
+        ],
+        "@typescript-eslint/no-empty-function": "warn",
+        "@typescript-eslint/no-empty-interface": "warn",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-inferrable-types": [
+          "warn",
+          {
+            "ignoreParameters": true
+          }
+        ],
+        "@typescript-eslint/no-throw-literal": "warn",
+        "@typescript-eslint/no-unnecessary-boolean-literal-compare": "warn",
+        "@typescript-eslint/no-unused-expressions": [
+          "warn",
+          {
+            "allowTernary": true
+          }
+        ],
+        "@typescript-eslint/no-var-requires": "error",
+        "@typescript-eslint/prefer-optional-chain": "warn",
+        "arrow-body-style": ["warn", "as-needed"],
+        "arrow-parens": ["warn", "as-needed"],
+        "ban/ban": [
+          "error",
+          {
+            "name": ["*", "ngOnInit"],
+            "message": "Use fixture.detectChanges instead!"
+          },
+          {
+            "name": ["*", "unsubscribe"],
+            "message": "Do it another way: https://medium.com/@benlesh/rxjs-dont-unsubscribe-6753ed4fda87"
+          },
+          {
+            "name": ["Object", "assign"],
+            "message": "Use spread operator instead!"
+          },
+          {
+            "name": ["*", "toBeDefined"],
+            "message": "Most of the time this is the wrong assertion in tests!"
+          },
+          {
+            "name": "spyOn",
+            "message": "Use ts-mockito instead!"
+          },
+          {
+            "name": "atob",
+            "message": "This is not available in universal mode. Use https://github.com/jacobwgillespie/b64u"
+          },
+          {
+            "name": "btoa",
+            "message": "This is not available in universal mode. Use https://github.com/jacobwgillespie/b64u"
+          }
+        ],
+        "complexity": [
+          "warn",
+          {
+            "max": 10
+          }
+        ],
+        "dot-notation": "off", // disabled in favor of @typescript-eslint/dot-notation
+        "eqeqeq": ["error", "always"],
+        "etc/no-commented-out-code": "warn",
+        "etc/no-deprecated": ["warn"],
+        "id-blacklist": [
+          "error",
+          "any",
+          "Number",
+          "String",
+          "string",
+          "Boolean",
+          "boolean",
+          "Undefined",
+          "undefined"
+        ],
+        "jest/no-commented-out-tests": "warn",
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "warn",
+        "jest/valid-title": [
+          "warn",
+          {
+            "mustMatch": {
+              "it": "^should",
+              "test": "[sS]*"
+            }
+          }
+        ],
+        "no-console": [
+          "warn",
+          {
+            "allow": ["error", "warn"]
+          }
+        ],
+        "no-duplicate-imports": "error",
+        "no-empty": "warn",
+        "no-extra-boolean-cast": "error",
+        "no-irregular-whitespace": "error",
+        "no-multiple-empty-lines": "warn",
+        "no-param-reassign": "error",
+        "no-restricted-imports": [
+          "warn",
+          {
+            "paths": [
+              {
+                "name": "cluster",
+                "importNames": ["Address"],
+                "message": "Most likely you would've wanted to import the model instead."
+              },
+              {
+                "name": "express",
+                "importNames": ["Router"],
+                "message": "Most likely you would've wanted to import from @angular/router instead."
+              },
+              {
+                "name": "@angular/forms",
+                "importNames": ["FormsModule"],
+                "message": "This module is for the template-driven approach which we don't use."
+              },
+              {
+                "name": "rxjs/operators",
+                "importNames": ["pluck"],
+                "message": "This operator is not typesafe. Use 'mapToProperty' instead."
+              },
+              {
+                "name": "(?!.*environments/environment.model)(.*environments/environment).+",
+                "message": "Importing specific environments is not allowed. Use the default one."
+              },
+              {
+                "name": "@sentry/browser",
+                "importNames": ["User"],
+                "message": "You probably meant to import the ISH PWA user model."
+              },
+              {
+                "name": "@ngrx/router-store",
+                "importNames": ["SerializedRouterStateSnapshot"],
+                "message": "We customized the serialization of the router state. Use 'RouterState' from 'ish-core/store/core/router/router.reducer'."
+              },
+              {
+                "name": "lodash.*"
+              },
+              {
+                "name": "ts-mockito/lib/ts-mockito",
+                "message": "use import from 'ts-mockito'"
+              },
+              {
+                "name": "*/src/.*",
+                "message": "Import with 'src' seems to be wrong. Transform into relative import, please."
+              },
+              {
+                "name": ".*node_modules/(.*)",
+                "message": "import with 'node_modules' seems to be wrong"
+              },
+              {
+                "name": "^(app|src)/.*",
+                "message": "Transform into relative import, please."
+              },
+              {
+                "name": "^[\\./]*/core/(.*)$",
+                "message": "Use import alias ish-core"
+              },
+              {
+                "name": "(.*)/$",
+                "message": "trailing '/' seems to be wrong"
+              },
+              {
+                "name": "^\\.\\/(\\..*$)",
+                "message": "unnecessary local folder reference"
+              },
+              {
+                "name": "^(.*store\\/)(.*)\\/\\2.(actions|selectors)$",
+                "message": "use aggregation import instead."
+              },
+              {
+                "name": "rxjs(?!($|/operators$))",
+                "message": "deep import from rxjs seems to be wrong, use 'rxjs' or 'rxjs/operators'"
+              }
+            ]
+          }
+        ],
+        "no-restricted-syntax": [
+          "error",
+          {
+            "selector": "MethodDefinition[static = true] ThisExpression",
+            "message": "Static this usage can be confusing for newcomers. It can also become imprecise when used with extended classes when a static this of a parent class no longer specifically refers to the parent class."
+          }
+        ],
+        "no-sequences": "error",
+        "no-template-curly-in-string": "error",
+        "no-throw-literal": "off", // disabled in favor of @typescript-eslint/no-throw-literal
+        "no-unused-vars": [
+          "warn",
+          {
+            "vars": "all",
+            "varsIgnorePattern": "[_]",
+            "args": "after-used",
+            "argsIgnorePattern": "^_",
+            "ignoreRestSiblings": false,
+            "caughtErrors": "none"
+          }
+        ],
+        "no-var": "warn",
+        "object-shorthand": "error",
+        "prefer-arrow-callback": "warn",
+        "prefer-const": "warn",
+        "prefer-template": "warn",
+        "prettier/prettier": "warn",
+        "rxjs-angular/prefer-takeuntil": [
+          "error",
+          {
+            "checkDestroy": true,
+            "checkComplete": true,
+            "checkDecorators": ["Component", "Pipe", "Directive"]
+          }
+        ],
+        "rxjs/finnish": [
+          "error",
+          {
+            "functions": false,
+            "methods": false,
+            "parameters": false,
+            "properties": false,
+            "variables": true,
+            "types": {
+              "^EventEmitter$": false,
+              "^Store": false
+            }
+          }
+        ],
+        "rxjs/no-create": "error",
+        "rxjs/no-ignored-replay-buffer": "error",
+        "rxjs/no-ignored-subscribe": "error",
+        "rxjs/no-internal": "error",
+        "rxjs/no-nested-subscribe": "warn",
+        "rxjs/no-subclass": "error",
+        "rxjs/no-subject-unsubscribe": "error",
+        "rxjs/no-subject-value": "error",
+        "rxjs/no-unsafe-catch": "error",
+        "rxjs/no-unsafe-subject-next": "error",
+        "rxjs/no-unsafe-switchmap": "error",
+        "rxjs/no-unsafe-takeuntil": "error",
+        "unicorn/no-null": [
+          "warn",
+          {
+            "checkStrictEquality": true
+          }
+        ],
+        "unicorn/prefer-switch": [
+          "warn",
+          {
+            "minimumCases": 3
+          }
+        ],
+        "unused-imports/no-unused-imports": "error"
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended",
-        "plugin:@angular-eslint/template/accessibility"
-      ],
-      "rules": {}
+      "files": ["*.js"],
+      "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+      "env": {
+        "es6": true,
+        "node": true
+      },
+      "parserOptions": {
+        "ecmaVersion": "latest"
+      },
+      "rules": {
+        "arrow-body-style": ["warn", "as-needed"],
+        "prefer-arrow-callback": "warn",
+        "prettier/prettier": "warn"
+      }
     },
     {
-      "files": [
-        "**/*.spec.js"
-      ],
+      "files": ["*.mjs"],
+      "extends": ["eslint:recommended", "plugin:prettier/recommended"],
       "env": {
-        "jest/globals": true
+        "es6": true,
+        "node": true
       },
-      "plugins": [
-        "jest"
-      ],
-      "extends": [
-        "plugin:jest/recommended"
-      ]
+      "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+      },
+      "rules": {
+        "arrow-body-style": ["warn", "as-needed"],
+        "ish-custom-rules/ordered-imports": "warn",
+        "prefer-arrow-callback": "warn",
+        "prefer-template": "warn",
+        "prettier/prettier": "warn"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {
+        "@angular-eslint/template/alt-text": "warn",
+        "@angular-eslint/template/elements-content": "error",
+        "@angular-eslint/template/valid-aria": "error",
+        "@angular-eslint/template/click-events-have-key-events": "error",
+        "@angular-eslint/template/mouse-events-have-key-events": "error",
+        "@angular-eslint/template/no-positive-tabindex": "error"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "excludedFiles": ["*inline-template-*.component.html"],
+      "extends": ["plugin:prettier/recommended"],
+      "rules": {
+        "prettier/prettier": [
+          "warn",
+          {
+            "parser": "angular"
+          }
+        ]
+      }
     }
   ]
 }
