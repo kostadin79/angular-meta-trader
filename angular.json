@@ -102,8 +102,7 @@
               "zone.js",
               "zone.js/testing"
             ],
-            "tsConfig": "tsconfig.spec.json",
-            "webWorkerTsConfig": "tsconfig.worker.json"
+            "tsConfig": "tsconfig.spec.json"
           }
         },
         "server": {

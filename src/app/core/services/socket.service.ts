@@ -10,7 +10,7 @@ export class SocketService {
   private messageToSocket$ = new Subject<SocketRequest>();
 
   private messageFromSocket$ = new Subject<SocketMessage<BaseSocketData>>();
-  public messageFromWebSocket$ = this.messageFromSocket$.asObservable();
+   messageFromWebSocket$ = this.messageFromSocket$.asObservable();
 
   worker: Worker | undefined;
   socketIsStarted = false;
@@ -59,9 +59,4 @@ export class SocketService {
     this.messageToSocket$.next(data ? { event, data } : { event });
   }
 
-  // startWebSocket() {
-  //   if(this.worker){
-  //     this.worker.postMessage({ event: 'START_SOCKET' });
-  //   }
-  // }
 }

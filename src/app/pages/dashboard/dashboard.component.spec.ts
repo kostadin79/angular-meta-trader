@@ -1,26 +1,60 @@
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MockComponent } from 'ng-mocks';
 import { DashboardComponent } from './dashboard.component';
+import { RatesChartsComponent } from './rates-charts/rates-charts.component';
+import { OpenPositionsComponent } from './open-positions/open-positions.component';
+import { LiveQuotesComponent } from './live-quotes/live-quotes.component';
+import { findAllCustomElements} from 'app-core/utils/test.helper';
 
-describe('DashboardComponent', () => {
-  let component: DashboardComponent;
+
+describe('Dashboard Component', () => {
   let fixture: ComponentFixture<DashboardComponent>;
+  let component: DashboardComponent;
+  let element: HTMLElement;
 
-  beforeEach(waitForAsync(() => {
-    return TestBed.configureTestingModule({
-      declarations: [DashboardComponent],
-      imports: [NoopAnimationsModule],
+
+  beforeEach(async () => {
+
+    await TestBed.configureTestingModule({
+      declarations: [
+        DashboardComponent,
+        MockComponent(RatesChartsComponent),
+        MockComponent(OpenPositionsComponent),
+        MockComponent(LiveQuotesComponent),
+      ],
+      imports: [RouterTestingModule],
+      providers: [],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    element = fixture.nativeElement;
   });
 
-  it('should compile', () => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
+    expect(element).toBeTruthy();
+    expect(() => fixture.detectChanges()).not.toThrow();
+  });
+
+  it('should render app-live-quotes component on page', () => {
+    component.isBrowser = true;
+    fixture.detectChanges();
+    expect(findAllCustomElements(element)).toContain('app-live-quotes');
+  });
+
+  it('should render app-rates-charts component on page', () => {
+    component.isBrowser = true;
+    fixture.detectChanges();
+    expect(findAllCustomElements(element)).toContain('app-rates-charts');
+  });
+
+  it('should render app-open-positions component on page', () => {
+    component.isBrowser = true;
+    fixture.detectChanges();
+    expect(findAllCustomElements(element)).toContain('app-open-positions');
   });
 });

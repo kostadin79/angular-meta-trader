@@ -1,31 +1,34 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { findAllCustomElements } from 'app-core/utils/test.helper';
 
-describe('AppComponent', () => {
+import { AppComponent } from './app.component';
+describe('App Component', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let component: AppComponent;
+  let element: HTMLElement;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
       ],
+      imports: [RouterTestingModule],
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    element = fixture.nativeElement;
   });
 
-  it(`should have as title 'angular-meta-trader'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-meta-trader');
+  it('should be created', () => {
+    expect(component).toBeTruthy();
+    expect(element).toBeTruthy();
+    expect(() => fixture.detectChanges()).not.toThrow();
   });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('angular-meta-trader app is running!');
+  it('should render table component on page', () => {
+    expect(findAllCustomElements(element)).toContain('router-outlet');
   });
 });

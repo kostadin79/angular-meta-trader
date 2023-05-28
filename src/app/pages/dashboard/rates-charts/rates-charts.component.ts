@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DataService } from 'app-core/services/data.service';
 import { ChartsFacade } from 'app-core/facades/charts.facade';
 import { take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { formatChartData, splitData, calculateMA } from 'app-core/utils/utils';
 import { whenTruthy } from 'app-core/utils/rxjs.helper';
-// import type { EChartsOption, ECharts, SetOptionOpts } from 'echarts';
 
 @Component({
   selector: 'app-rates-charts',
@@ -21,7 +19,6 @@ export class RatesChartsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
 
   constructor(
-    private dataService: DataService,
     private chartsFacade: ChartsFacade
   ) {}
 

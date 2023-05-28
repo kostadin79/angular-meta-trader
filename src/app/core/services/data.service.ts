@@ -49,7 +49,7 @@ export class DataService {
   getInitialRates(): Observable<Rate[]> {
     this.sentMessageToSocket('MULTIPLE_RATES', this.ratesList);
     return this.socketService.messageFromWebSocket$.pipe(
-      filter((data: SocketMessage<BaseSocketData>) => data.event == 'MULTIPLE_RATES'),
+      filter((data: SocketMessage<BaseSocketData>) => data.event === 'MULTIPLE_RATES'),
       map((val: SocketMessage<BaseRate>) => val.data),
       map((rates: BaseRate[]) => convertRates(rates)),
       take(1)
@@ -71,7 +71,7 @@ export class DataService {
   startOpenPositionsStream(): Observable<OpenPosition[]> {
     this.sentMessageToSocket('SUBSCRIBE_OPEN_POSITIONS');
     return this.socketService.messageFromWebSocket$.pipe(
-      filter((data: SocketMessage<BaseSocketData>) => data.event == 'ORDERS'),
+      filter((data: SocketMessage<BaseSocketData>) => data.event === 'ORDERS'),
       map((val: SocketMessage<BaseOpenPosition>) => val.data),
       map((val: BaseOpenPosition[]) => convertOpenPositions(val))
     );

@@ -44,7 +44,7 @@ export function formatChartData(
 
 export function splitData(
   rawData: [string, number, number, number, number, number][]
-) {
+): {categoryData: string[], values: number[][], volumes: number[][] } {
   const categoryData: string[] = [];
   const values: number[][] = [];
   const volumes: number[][] = [];

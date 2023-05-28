@@ -6,7 +6,6 @@ import {
   OnInit,
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { DataService } from 'app-core/services/data.service';
 import { Rate } from 'app-core/models/rate.model';
 import {
   faPause,
@@ -30,14 +29,12 @@ export class LiveQuotesComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   constructor(
-    private dataService: DataService,
     private ratesFacade: RatesFacade,
     private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.ratesFacade.loadInitialRates();
-
     this.ratesFacade.startRatesStream();
 
     this.ratesFacade
