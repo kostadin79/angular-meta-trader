@@ -17,6 +17,6 @@ export const selectAllCharts = createSelector(chartsEntities, selectAll);
 export const selectTotalCharts = createSelector(chartsEntities, selectTotal);
 
 export const selectChartEntity = (props: { id: string }) =>
-  createSelector(selectAllCharts, (entities) => {
+  createSelector(selectAllCharts, entities => {
     return entities.find((value) => value.id === props.id);
   });

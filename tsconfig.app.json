@@ -9,7 +9,6 @@
     "src/main.browser.ts"
   ],
   "include": [
-    "src/**/*.d.ts",
     "src/typings.d.ts"
   ]
 }

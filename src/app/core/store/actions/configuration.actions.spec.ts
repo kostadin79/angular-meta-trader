@@ -1,7 +1,20 @@
-import * as fromConnectWebsocket from './configuration.actions';
+import * as configuration from './configuration.actions';
+import { anything } from 'ts-mockito';
 
-describe('loadConnectWebsockets', () => {
+describe('Configuration actions', () => {
   it('should return an action', () => {
-    expect(fromConnectWebsocket.loadConnectWebsockets().type).toBe('[ConnectWebsocket] Load ConnectWebsockets');
+    expect(configuration.loadConnectWebsockets().type).toBe(
+      '[ConnectWebsocket] Load ConnectWebsockets'
+    );
+  });
+  it('should return an action', () => {
+    expect(configuration.loadConnectWebsocketsSuccess().type).toBe(
+      '[ConnectWebsocket] Load ConnectWebsockets Success'
+    );
+  });
+  it('should return an action', () => {
+    expect(configuration.loadConnectWebsocketsFailure(anything()).type).toBe(
+      '[ConnectWebsocket] Load ConnectWebsockets Failure'
+    );
   });
 });

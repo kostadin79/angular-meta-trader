@@ -1,24 +1,26 @@
-<div
-  *ngFor="let rate of ratesListData; trackBy: trackByFn"
-  [ngClass]="{
-    'row g-0 py-2 px-1': true,
-    'text-success': rate.direction === 'UP',
-    'text-danger': rate.direction === 'DOWN'
-  }"
-  (click)="changeChartsRate(rate.symbol)"
->
-  <div class="col-3">{{ rate.symbol }}</div>
-  <div class="col-4">{{ rate.bid }}</div>
-  <div class="col-4">{{ rate.ask }}</div>
-  <div class="col-1">
-    <div *ngIf="rate.direction === 'INITIAL'">
-      <fa-icon [icon]="faPause"></fa-icon>
-    </div>
-    <div *ngIf="rate.direction === 'UP'">
-      <fa-icon [icon]="faSquareCaretUp"></fa-icon>
-    </div>
-    <div *ngIf="rate.direction === 'DOWN'">
-      <fa-icon [icon]="faSquareCaretDown"></fa-icon>
+<ng-container *ngFor="let rate of ratesListData; trackBy: trackByFn">
+  <div
+    [ngClass]="{
+      'row g-0 py-2 px-1': true,
+      'text-success': rate.direction === 'UP',
+      'text-danger': rate.direction === 'DOWN'
+    }"
+    (click)="changeChartsRate(rate.symbol)"
+  >
+    <div class="col-3">{{ rate.symbol }}</div>
+    <div class="col-4">{{ rate.bid }}</div>
+    <div class="col-4">{{ rate.ask }}</div>
+    <div class="col-1">
+      <div *ngIf="rate.direction === 'INITIAL'">
+        <fa-icon [icon]="faPause"></fa-icon>
+      </div>
+      <div *ngIf="rate.direction === 'UP'">
+        <fa-icon [icon]="faSquareCaretUp"></fa-icon>
+      </div>
+      <div *ngIf="rate.direction === 'DOWN'">
+        <fa-icon [icon]="faSquareCaretDown"></fa-icon>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
+

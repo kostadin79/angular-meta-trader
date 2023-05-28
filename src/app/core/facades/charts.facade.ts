@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from 'app-core/models/general-state';
 import { getChart } from 'app-core/store/actions/chart.actions';
 import {
@@ -21,22 +21,22 @@ export class ChartsFacade {
   }
 
   getAllChartsIds() {
-    return this.store.select(selectChartsIds);
+    return this.store.pipe(select(selectChartsIds));
   }
 
   getChartsEntities() {
-    return this.store.select(selectChartsEntities);
+    return this.store.pipe(select(selectChartsEntities));
   }
 
   getAllCharts() {
-    return this.store.select(selectAllCharts);
+    return this.store.pipe(select(selectAllCharts));
   }
 
   gtTotalCharts() {
-    return this.store.select(selectTotalCharts);
+    return this.store.pipe(select(selectTotalCharts));
   }
 
   getChartById(id: string) {
-    return this.store.select(selectChartEntity({ id }));
+    return this.store.pipe(select(selectChartEntity({ id })));
   }
 }

@@ -15,37 +15,41 @@
       <th scope="col">profit</th>
     </tr>
   </thead>
-  <tbody *ngIf="openPositions.length > 0">
-    <tr *ngFor="let openPosition of openPositions">
-      <th scope="row">{{ openPosition.order }}</th>
-      <td>{{ openPosition.open_time }}</td>
-      <td>{{ openPosition.type }}</td>
-      <td>{{ openPosition.volume }}</td>
-      <td>{{ openPosition.symbol }}</td>
-      <td>{{ openPosition.price }}</td>
-      <td>{{ openPosition.sl }}</td>
-      <td>{{ openPosition.tp }}</td>
-      <td>{{ openPosition.price }}</td>
-      <td>{{ openPosition.commission }}</td>
-      <td>{{ openPosition.swap }}</td>
-      <td>{{ openPosition.profit }}</td>
-    </tr>
-  </tbody>
-  <tbody *ngIf="!openPositions.length">
-    <tr>
-      <th scope="row">n/a</th>
-      <td>n/a</td>
-      <td>n/a</td>
-      <td>n/a</td>
-      <td>n/a</td>
-      <td>n/a</td>
-      <td>n/a</td>
-      <td>n/a</td>
-      <td>n/a</td>
-      <td>n/a</td>
-      <td>n/a</td>
-      <td>n/a</td>
-    </tr>
+  <tbody>
+    <ng-container *ngIf="openPositions; else noPositions">
+      <ng-container *ngIf="openPositions.length > 0">
+        <tr *ngFor="let openPosition of openPositions">
+          <th scope="row">{{ openPosition.order }}</th>
+          <td class="open-time">{{ openPosition.open_time }}</td>
+          <td>{{ openPosition.type }}</td>
+          <td>{{ openPosition.volume }}</td>
+          <td class="symbol">{{ openPosition.symbol }}</td>
+          <td class="price">{{ openPosition.price }}</td>
+          <td>{{ openPosition.sl }}</td>
+          <td>{{ openPosition.tp }}</td>
+          <td>{{ openPosition.price }}</td>
+          <td>{{ openPosition.commission }}</td>
+          <td>{{ openPosition.swap }}</td>
+          <td>{{ openPosition.profit }}</td>
+        </tr>
+      </ng-container>
+    </ng-container>
+    <ng-template #noPositions>
+      <tr>
+        <th scope="row">n/a</th>
+        <td>n/a</td>
+        <td>n/a</td>
+        <td>n/a</td>
+        <td>n/a</td>
+        <td>n/a</td>
+        <td>n/a</td>
+        <td>n/a</td>
+        <td>n/a</td>
+        <td>n/a</td>
+        <td>n/a</td>
+        <td>n/a</td>
+      </tr>
+    </ng-template>
   </tbody>
 </table>
 
