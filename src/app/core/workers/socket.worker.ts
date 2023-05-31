@@ -1,10 +1,9 @@
 /// <reference lib="webworker" />
 
 import { SocketRequest } from 'app-core/models/socket-message';
+import { WS_SOCKET_URL } from '../../../environments/environment';
 
-const socketAddress = `ws://127.0.0.1:8888`;
-
-const socket = new WebSocket(socketAddress);
+const socket = new WebSocket(WS_SOCKET_URL);
 
 addEventListener('message', ({ data }: MessageEvent<SocketRequest>) => {
   socket.send(JSON.stringify(data));
