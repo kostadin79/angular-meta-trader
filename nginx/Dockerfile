@@ -1,10 +1,10 @@
-FROM node:16.20.0-slim AS build-stage
+FROM node:16.20.0 AS build-stage
 WORKDIR /app
-COPY ./package.json /app/
-RUN npm install
-COPY . /app/
 ARG WS_SOCKET_URL
 ENV WS_SOCKET_URL $WS_SOCKET_URL
+COPY . /app/
+RUN npm run add-socket
+RUN npm install
 RUN npm run build
 
 FROM nginx:alpine

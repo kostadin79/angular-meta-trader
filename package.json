@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Angular UI with NGRX, SSR and WebSocket for Meta Trader forex terminal",
   "scripts": {
+    "add-socket": "node scripts/socket-env.mjs",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
