@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, map } from 'rxjs/operators';
+import {concatMap, map, switchMap, tap} from 'rxjs/operators';
 import {
   initialOpenPositionsLoad,
   initialOpenPositionsLoadSuccess,
-  startOpenPositionsStream,
+  startOpenPositionsStream, stopOpenPositionsStream,
   updateOpenPositionsFromStreamSuccess,
 } from 'app-core/store/actions/open-position.actions';
 import { DataService } from 'app-core/services/data.service';
@@ -20,8 +20,8 @@ export class OpenPositionsEffects {
         return this.dataService
           .getInitialOpenPositions()
           .pipe(
-            map((openPositions) => initialOpenPositionsLoadSuccess({ openPositions }))
-          );
+            concatMap(openPositions => [initialOpenPositionsLoadSuccess({ openPositions }), startOpenPositionsStream()])
+          )
       })
     );
   });
@@ -29,7 +29,7 @@ export class OpenPositionsEffects {
   startOpenPositionsStream$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(startOpenPositionsStream),
-      concatMap(() => {
+      switchMap(() => {
         return this.dataService
           .startOpenPositionsStream()
           .pipe(
@@ -40,4 +40,11 @@ export class OpenPositionsEffects {
       })
     );
   });
+
+  stopOpenPositionsStream$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(stopOpenPositionsStream),
+      tap(() => this.dataService.stopOpenPositionStream())
+    ), {dispatch: false}
+  );
 }

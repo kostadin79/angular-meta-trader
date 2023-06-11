@@ -18,9 +18,6 @@ export class OpenPositionsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.openPositionsFacade.loadInitialOpenPositions();
-
-    this.openPositionsFacade.startOpenPositionsStream();
 
     this.openPositionsFacade
       .getAllOpenPositions()

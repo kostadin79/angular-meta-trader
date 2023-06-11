@@ -3,12 +3,12 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
   initialRatesLoad,
   initialRatesLoadSuccess,
-  startRatesStream,
+  startRatesStream, stopRatesStream,
   updateRatesFromStreamSuccess,
 } from 'app-core/store/actions/rate.actions';
-import { concatMap, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import {concatMap, map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import { DataService } from 'app-core/services/data.service';
-import { Store } from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import { selectAllRates } from 'app-core/store/selectors/rates.selectors';
 import { RatesDirection } from 'app-core/models/enumerations';
 import { Rate, rateDirectionStatuses } from 'app-core/models/rate.model';
@@ -21,27 +21,24 @@ export class RatesEffects {
     private store: Store
   ) {}
 
-  initialRatesLoad$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(initialRatesLoad),
-      concatMap(() => {
-        return this.dataService
-          .getInitialRates()
-          .pipe(map((rates) => initialRatesLoadSuccess({ rates })));
-      })
-    );
-  });
 
-  startRatesStream$ = createEffect(() => {
-    return this.actions$.pipe(
+  initialRatesLoad$ = createEffect(() => this.actions$.pipe(
+      ofType(initialRatesLoad),
+      concatMap(() => this.dataService
+          .getInitialRates()
+          .pipe(
+            concatMap(rates => [initialRatesLoadSuccess({ rates }),startRatesStream()])
+          ))
+    ));
+
+  startRatesStream$ = createEffect(() => this.actions$.pipe(
       ofType(startRatesStream),
-      switchMap(() => {
-        return this.dataService.startRatesStream().pipe(
-          withLatestFrom(this.store.select(selectAllRates)),
-          map(([rates, oldRates]) => {
-            const changedRates = rates.map((newRate) => {
+      switchMap(() => this.dataService.startRatesStream().pipe(
+          withLatestFrom(this.store.pipe(select(selectAllRates))),
+          map(([rates, oldRates]) =>
+             rates.map(newRate => {
               const oldRateForCheck = oldRates.find(
-                (oldRate) => oldRate.id === newRate.id
+                oldRate => oldRate.id === newRate.id
               );
               let direction: rateDirectionStatuses = RatesDirection.Initial;
 
@@ -60,13 +57,16 @@ export class RatesEffects {
                 }
               }
               return { ...newRate, direction };
-            });
-
-            return changedRates;
-          }),
+            })
+          ),
           map((rates: Rate[]) => updateRatesFromStreamSuccess({ rates }))
-        );
-      })
-    );
-  });
+        ))
+    ));
+
+  stopRatesStream$ = createEffect(() =>
+     this.actions$.pipe(
+      ofType(stopRatesStream),
+      tap(() => this.dataService.stopRatesStream())
+    ), {dispatch: false}
+  );
 }
