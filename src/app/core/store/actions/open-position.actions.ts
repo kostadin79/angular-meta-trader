@@ -14,6 +14,10 @@ export const startOpenPositionsStream = createAction(
   '[OpenPosition/API] Start Open Position Stream'
 );
 
+export const stopOpenPositionsStream = createAction(
+  '[OpenPosition/API] Stop Open Position Stream'
+);
+
 export const updateOpenPositionsFromStreamSuccess = createAction(
   '[OpenPosition/API] Update Open Position From Stream Success',
   props<{ openPositions: OpenPosition[] }>()

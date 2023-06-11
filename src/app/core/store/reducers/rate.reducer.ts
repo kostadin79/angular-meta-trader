@@ -28,10 +28,10 @@ export const reducer = createReducer(
   initialState,
   on(addRate, (state, action) => adapter.addOne(action.rate, state)),
   on(upsertRate, (state, action) => adapter.upsertOne(action.rate, state)),
-  on(addRates, initialRatesLoadSuccess, (state, action) =>
+  on(addRates, (state, action) =>
     adapter.addMany(action.rates, state)
   ),
-  on(upsertRates, updateRatesFromStreamSuccess, (state, action) =>
+  on(upsertRates, initialRatesLoadSuccess, updateRatesFromStreamSuccess, (state, action) =>
     adapter.upsertMany(action.rates, state)
   ),
   on(updateRate, (state, action) => adapter.updateOne(action.rate, state)),

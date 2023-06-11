@@ -1,10 +1,10 @@
 import { Injectable, Optional } from '@angular/core';
 import { map, filter, take } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 import { BaseRate, Rate } from '../models/rate.model';
 import { BaseOpenPosition, OpenPosition } from '../models/open-position.model';
 import { ratesList } from '../../../environments/environment';
-import { BaseSocketData, SocketMessage} from '../models/socket-message';
+import { BaseSocketData, SocketMessage } from '../models/socket-message';
 import { Chart, BaseChart } from '../models/chart.model';
 import {
   convertChart,
@@ -21,11 +21,18 @@ export class DataService {
 
   constructor(@Optional() private socketService: SocketService) {}
 
-  // startWebSocket() {
-  //   if (this.socketService) {
-  //     this.socketService.startWebSocket();
-  //   }
-  // }
+  startWebSocket() {
+    if (this.socketService) {
+      this.socketService.startWebSocket();
+    }
+  }
+  checkIsSocketIsConnected(){
+    if (this.socketService) {
+      return this.socketService.startedSocket
+    } else {
+      return of(false);
+    }
+  }
 
   sentMessageToSocket(event: string, data?: string | string[]) {
     if (this.socketService) {

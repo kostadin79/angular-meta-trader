@@ -6,24 +6,12 @@ import {
   selectOpenPositionsIds,
   selectTotalOpenPositions,
 } from 'app-core/store/selectors/open-positions.selectors';
-import {
-  initialOpenPositionsLoad,
-  startOpenPositionsStream,
-} from 'app-core/store/actions/open-position.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OpenPositionFacade {
   constructor(private store: Store) {}
-
-  loadInitialOpenPositions() {
-    this.store.dispatch(initialOpenPositionsLoad());
-  }
-
-  startOpenPositionsStream() {
-    this.store.dispatch(startOpenPositionsStream());
-  }
 
   getSelectedOpenPositions() {
     return this.store.pipe(select(selectOpenPositionsIds));

@@ -34,8 +34,6 @@ export class LiveQuotesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.ratesFacade.loadInitialRates();
-    this.ratesFacade.startRatesStream();
 
     this.ratesFacade
       .getAllRates()

@@ -14,6 +14,10 @@ export const startRatesStream = createAction(
   '[Rate/API] Start Rates Stream'
 );
 
+export const stopRatesStream = createAction(
+  '[Rate/API] Stop Rates Stream'
+);
+
 export const updateRatesFromStreamSuccess = createAction(
   '[Rate/API] Update Rates From Stream Success',
   props<{ rates: Rate[] }>()
