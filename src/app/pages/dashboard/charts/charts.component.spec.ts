@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RatesChartsComponent } from './rates-charts.component';
+import { ChartsComponent } from './charts.component';
 import { anything, instance, mock, when } from 'ts-mockito';
 import { of } from 'rxjs';
 import { ChartsFacade } from 'app-core/facades/charts.facade';
@@ -8,14 +8,14 @@ import { BaseChart, Chart } from 'app-core/models/chart.model';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 describe('Rates Charts Component', () => {
-  let fixture: ComponentFixture<RatesChartsComponent>;
-  let component: RatesChartsComponent;
+  let fixture: ComponentFixture<ChartsComponent>;
+  let component: ChartsComponent;
   let element: HTMLElement;
   let chartsFacade: ChartsFacade;
 
   beforeEach(async () => {
     chartsFacade = mock(ChartsFacade);
-    chartsFacade.getChart(anything());
+    // chartsFacade.getChart(anything());
     const chartsData: BaseChart[] = [
       {
         time: '2022.11.30 00:00',
@@ -1049,7 +1049,7 @@ describe('Rates Charts Component', () => {
 
 
     await TestBed.configureTestingModule({
-      declarations: [RatesChartsComponent],
+      declarations: [ChartsComponent],
       imports: [
         RouterTestingModule,
         NgxEchartsModule.forRoot({
@@ -1066,7 +1066,7 @@ describe('Rates Charts Component', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RatesChartsComponent);
+    fixture = TestBed.createComponent(ChartsComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

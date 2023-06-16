@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
 import { DashboardComponent } from './dashboard.component';
-import { RatesChartsComponent } from './rates-charts/rates-charts.component';
+import { ChartsComponent } from './charts/charts.component';
 import { OpenPositionsComponent } from './open-positions/open-positions.component';
 import { LiveQuotesComponent } from './live-quotes/live-quotes.component';
 import { findAllCustomElements} from 'app-core/utils/test.helper';
@@ -19,7 +19,7 @@ describe('Dashboard Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         DashboardComponent,
-        MockComponent(RatesChartsComponent),
+        MockComponent(ChartsComponent),
         MockComponent(OpenPositionsComponent),
         MockComponent(LiveQuotesComponent),
       ],
@@ -46,10 +46,10 @@ describe('Dashboard Component', () => {
     expect(findAllCustomElements(element)).toContain('app-live-quotes');
   });
 
-  it('should render app-rates-charts component on page', () => {
+  it('should render app-charts component on page', () => {
     component.isBrowser = true;
     fixture.detectChanges();
-    expect(findAllCustomElements(element)).toContain('app-rates-charts');
+    expect(findAllCustomElements(element)).toContain('app-charts');
   });
 
   it('should render app-open-positions component on page', () => {

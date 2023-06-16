@@ -1,6 +1,4 @@
-<div
-  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h1 class="h2">Dashboard</h1>
   <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group me-2">
@@ -11,10 +9,7 @@
         Export
       </button>
     </div>
-    <button
-      type="button"
-      class="btn btn-sm btn-outline-secondary dropdown-toggle"
-    >
+    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
       <span data-feather="calendar"></span>
       This week
     </button>
@@ -25,14 +20,12 @@
     <ng-container *ngIf="isBrowser">
       <app-live-quotes></app-live-quotes>
     </ng-container>
-
   </div>
   <div class="col-12 col-md-10">
     <h2>Charts</h2>
     <ng-container *ngIf="isBrowser">
-      <app-rates-charts></app-rates-charts>
+      <app-charts></app-charts>
     </ng-container>
-
     <h2>Positions</h2>
     <div class="table-responsive">
       <ng-container *ngIf="isBrowser">

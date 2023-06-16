@@ -1,11 +1,8 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  OnDestroy,
-  OnInit,
+  inject,
 } from '@angular/core';
-import { Subject } from 'rxjs';
 import { Rate } from 'app-core/models/rate.model';
 import {
   faPause,
@@ -13,7 +10,7 @@ import {
   faSquareCaretUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { RatesFacade } from 'app-core/facades/rates.facade';
-import { takeUntil } from 'rxjs/operators';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-live-quotes',
@@ -21,39 +18,15 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./live-quotes.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LiveQuotesComponent implements OnInit, OnDestroy {
-  ratesListData: Rate[] = [];
+export class LiveQuotesComponent {
   faPause = faPause;
   faSquareCaretUp = faSquareCaretUp;
   faSquareCaretDown = faSquareCaretDown;
-  private destroy$ = new Subject();
-
-  constructor(
-    private ratesFacade: RatesFacade,
-    private cd: ChangeDetectorRef
-  ) {}
-
-  ngOnInit(): void {
-
-    this.ratesFacade
-      .getAllRates()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((value) => {
-        this.ratesListData = value;
-        this.cd.detectChanges();
-      });
-  }
-
-  changeChartsRate(event: any) {
-    console.log('changeChartsRate()', event);
-  }
+  ratesFacade: RatesFacade = inject(RatesFacade);
+  rates = toSignal<Rate[]>(this.ratesFacade.getAllRates());
 
   trackByFn(index: number, rate: Rate) {
     return rate.bid;
   }
 
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.complete();
-  }
 }

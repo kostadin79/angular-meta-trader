@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { AppState } from 'app-core/models/general-state';
-import { getChart } from 'app-core/store/actions/chart.actions';
 import {
   selectAllCharts,
   selectChartEntity,
@@ -14,11 +12,7 @@ import {
   providedIn: 'root',
 })
 export class ChartsFacade {
-  constructor(private store: Store<AppState>) {}
-
-  getChart(chart: string) {
-    this.store.dispatch(getChart({ chart }));
-  }
+  constructor(private store: Store) {}
 
   getAllChartsIds() {
     return this.store.pipe(select(selectChartsIds));
