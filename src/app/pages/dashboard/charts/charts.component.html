@@ -1,0 +1,3 @@
+<ng-container *ngIf="chartConfig() as chartConfig">
+  <div echarts [options]="chartConfig | chartPipe: currentChartPair : downColor : upColor" class="demo-chart"></div>
+</ng-container>

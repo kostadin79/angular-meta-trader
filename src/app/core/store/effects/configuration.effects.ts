@@ -1,4 +1,4 @@
-import {Inject, Injectable, isDevMode, PLATFORM_ID} from '@angular/core';
+import { Inject, Injectable, isDevMode, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import {
   Actions,
@@ -6,7 +6,6 @@ import {
   ROOT_EFFECTS_INIT,
   ofType,
 } from '@ngrx/effects';
-
 import {
   loadConnectWebsockets,
   loadConnectWebsocketsSuccess,
@@ -26,17 +25,17 @@ import {
   ratesStreamStatus,
   socketStatus
 } from 'app-core/store/selectors/configuration.selectors';
-
 import { routerNavigationAction } from '@ngrx/router-store';
 import { mapToPayload } from 'app-core/utils/rxjs.helper';
 import {
   initialRatesLoad,
   stopRatesStream
-} from "app-core/store/actions/rate.actions";
+} from 'app-core/store/actions/rate.actions';
 import {
   initialOpenPositionsLoad,
   stopOpenPositionsStream
-} from "app-core/store/actions/open-position.actions";
+} from 'app-core/store/actions/open-position.actions';
+import {getChart} from 'app-core/store/actions/chart.actions';
 
 const ACTION_TYPE = 'Transfer State from SSR';
 
@@ -46,7 +45,6 @@ export class ConfigurationEffects {
     private actions$: Actions,
     private dataService: DataService,
     private store: Store,
-
     @Inject(PLATFORM_ID) private platformId: string
   ) {}
 
@@ -88,31 +86,30 @@ export class ConfigurationEffects {
     ));
 
   startRatesOpenPositionsStream$ = createEffect(() =>
-      this.actions$.pipe(
+    this.actions$.pipe(
       ofType(routerNavigationAction),
-        filter(() => isPlatformBrowser(this.platformId)),
-        mapToPayload(),
-        map(val => val.routerState),
-        filter(val => val.url === '/dashboard'),
-        concatMap(() =>  this.store.pipe(
+      filter(() => isPlatformBrowser(this.platformId)),
+      mapToPayload(),
+      map((val) => val.routerState),
+      filter(val => val.url === '/dashboard'),
+      concatMap(() =>  this.store.pipe(
           select(socketStatus),
           filter(status => !!status),
           take(1),
-          concatMap(() => [initialRatesLoad(), initialOpenPositionsLoad()])
+          concatMap(() => [initialRatesLoad(), initialOpenPositionsLoad(), getChart({chart: 'EURJPY'})])
         )
       )
-      )
+    )
   );
   stopRatesOpenPositionsStream$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType(routerNavigationAction),
-        filter(() => isPlatformBrowser(this.platformId)),
-        mapToPayload(),
-        map((val) => val.routerState),
-        filter((val) => val.url !== '/dashboard'),
-        withLatestFrom(this.store.pipe(select(ratesStreamStatus)),this.store.pipe(select(openPositionStreamStatus))),
-        filter(([,ratesStatus,positionsStatus]) => !!ratesStatus && !!positionsStatus),
-        concatMap(() => [stopRatesStream(),stopOpenPositionsStream()])
-      )
+    this.actions$.pipe(
+      ofType(routerNavigationAction),
+      filter(() => isPlatformBrowser(this.platformId)),
+      mapToPayload(),
+      map((val) => val.routerState),
+      filter((val) => val.url !== '/dashboard'),
+      withLatestFrom(this.store.pipe(select(ratesStreamStatus)),this.store.pipe(select(openPositionStreamStatus))),
+      filter(([,ratesStatus,positionsStatus]) => !!ratesStatus && !!positionsStatus),
+        concatMap(() => [stopRatesStream(),stopOpenPositionsStream()]))
   );
 }

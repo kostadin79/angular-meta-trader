@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'app-shared/shared.module';
 import { DashboardComponent } from './dashboard.component';
-import { RatesChartsComponent } from './rates-charts/rates-charts.component';
+import { ChartsComponent } from './charts/charts.component';
 import { LiveQuotesComponent } from './live-quotes/live-quotes.component';
 import { OpenPositionsComponent } from './open-positions/open-positions.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { DashboardRoutingModule } from './dashboard-routes';
+import { ChartPipe } from 'app-core/pipes/chart.pipe';
 
 @NgModule({
   imports: [
@@ -16,10 +17,11 @@ import { DashboardRoutingModule } from './dashboard-routes';
     SharedModule,
   ],
   declarations: [
+    ChartPipe,
+    ChartsComponent,
     DashboardComponent,
     LiveQuotesComponent,
     OpenPositionsComponent,
-    RatesChartsComponent,
   ],
 })
 export class DashboardModule {}

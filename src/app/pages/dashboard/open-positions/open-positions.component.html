@@ -16,8 +16,8 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngIf="openPositions; else noPositions">
-      <ng-container *ngIf="openPositions.length > 0">
+    <ng-container *ngIf="positions() as openPositions">
+      <ng-container *ngIf="openPositions.length > 0 else noPositions">
         <tr *ngFor="let openPosition of openPositions">
           <th scope="row">{{ openPosition.order }}</th>
           <td class="open-time">{{ openPosition.open_time }}</td>
@@ -33,23 +33,23 @@
           <td>{{ openPosition.profit }}</td>
         </tr>
       </ng-container>
+      <ng-template #noPositions>
+        <tr>
+          <th scope="row">n/a</th>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>n/a</td>
+        </tr>
+      </ng-template>
     </ng-container>
-    <ng-template #noPositions>
-      <tr>
-        <th scope="row">n/a</th>
-        <td>n/a</td>
-        <td>n/a</td>
-        <td>n/a</td>
-        <td>n/a</td>
-        <td>n/a</td>
-        <td>n/a</td>
-        <td>n/a</td>
-        <td>n/a</td>
-        <td>n/a</td>
-        <td>n/a</td>
-        <td>n/a</td>
-      </tr>
-    </ng-template>
   </tbody>
 </table>
 
