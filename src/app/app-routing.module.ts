@@ -5,15 +5,17 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 const routes: Routes = [
   {
     path: 'dashboard',
-    loadChildren: () =>
-      import('./pages/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
+    loadComponent: () =>
+      import('./pages/dashboard/dashboard.component').then(
+        (m) => m.DashboardComponent
       ),
   },
   {
     path: 'user',
     loadChildren: () =>
-      import('./pages/user-profile/user.module').then((m) => m.UserModule),
+      import('./pages/user-profile/user-profile.component').then(
+        (m) => m.UserProfileComponent
+      ),
   },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' }, // redirect to `first-component`
   { path: '**', component: PageNotFoundComponent }, // Wildcard route for a 404 page

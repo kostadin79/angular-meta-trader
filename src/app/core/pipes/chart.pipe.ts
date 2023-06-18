@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { BaseChart, Chart } from 'app-core/models/chart.model';
 import { EChartsOption } from 'echarts';
 
-@Pipe({ name: 'chartPipe', pure: true })
+@Pipe({ name: 'chartPipe', pure: true, standalone: true })
 export class ChartPipe implements PipeTransform {
   transform(
     value: Chart,

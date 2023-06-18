@@ -14,4 +14,7 @@ export interface BaseChart {
   volume: number;
 }
 
-export type ChartsState = EntityState<Chart>;
+// export type ChartsState = EntityState<Chart>;
+export interface ChartsState extends EntityState<Chart> {
+  selectedChartId: string | null;
+}

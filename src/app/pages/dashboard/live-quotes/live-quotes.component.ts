@@ -11,12 +11,21 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { RatesFacade } from 'app-core/facades/rates.facade';
 import { toSignal } from '@angular/core/rxjs-interop';
+import {NgClass, NgFor, NgIf} from "@angular/common";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @Component({
   selector: 'app-live-quotes',
   templateUrl: './live-quotes.component.html',
   styleUrls: ['./live-quotes.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports:[
+    NgIf,
+    NgFor,
+    NgClass,
+    FontAwesomeModule
+  ]
 })
 export class LiveQuotesComponent {
   faPause = faPause;
