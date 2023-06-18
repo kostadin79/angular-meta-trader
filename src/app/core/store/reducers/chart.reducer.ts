@@ -9,7 +9,7 @@ export const chartsFeatureKey = 'charts';
 export const adapter: EntityAdapter<Chart> = createEntityAdapter<Chart>();
 
 export const initialState: ChartsState = adapter.getInitialState({
-  // additional entity state properties
+  selectedChartId: null
 });
 
 export const reducer = createReducer(
@@ -46,3 +46,5 @@ export const reducer = createReducer(
 
 export const { selectIds, selectEntities, selectAll, selectTotal } =
   adapter.getSelectors();
+
+export const getSelectedChartId = (state: ChartsState) => state.selectedChartId;
