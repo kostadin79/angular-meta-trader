@@ -1,14 +1,6 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppBrowserModule } from './app/app.browser.module';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { config } from './app/app.config';
+import { AppComponent } from './app/app.component';
 
-function bootstrap() {
-  platformBrowserDynamic()
-    .bootstrapModule(AppBrowserModule)
-    .catch((err) => console.error(err));
-}
-
-if (document.readyState === 'complete') {
-  bootstrap();
-} else {
-  document.addEventListener('DOMContentLoaded', bootstrap);
-}
+bootstrapApplication(AppComponent, config)
+  .catch((err) => console.error(err));
