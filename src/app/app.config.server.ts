@@ -1,22 +1,13 @@
 import {
   mergeApplicationConfig,
-  ApplicationConfig,
-  importProvidersFrom,
+  ApplicationConfig
 } from '@angular/core';
-import {
-  provideServerRendering,
-  ServerModule,
-  ServerTransferStateModule,
-} from '@angular/platform-server';
+import { provideServerRendering } from '@angular/platform-server';
 import { defaultConfig } from './app.config';
 
 const serverConfig: ApplicationConfig = {
   providers: [
     provideServerRendering(),
-    importProvidersFrom(
-      ServerModule,
-      ServerTransferStateModule
-    )
   ],
 };
 
